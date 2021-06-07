@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { ThemeProvider } from "@material-ui/core/styles";
+import Header from "Components/Header";
+import { Router } from "react-router";
+import { Route } from "react-router-dom";
+import { createBrowserHistory as createHistory } from "history";
+import Login from "Container/Login";
+import InnovationFactor from "Container/InnovationFactor";
+import Groupsets from "Container/Groupsets";
+import { theme } from "./Theme";
+
+const history = createHistory();
 
 function App() {
+  const [currentRoute, setCurrentRoute] = React.useState(
+    window.location.pathname.split("/")[1] || "/"
+  );
+
+  const isLoggedIn = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).isLoggedIn
+    : null;
+
+  useEffect(() => {
+    history.listen((location) => {
+      const newRoute =
+        location.pathname.split("/")[1].trim().length > 0
+          ? location.pathname.split("/")[1]
+          : "/";
+      setCurrentRoute(newRoute);
+    });
+    if (!isLoggedIn) history.push("/login");
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router history={history}>
+        {isLoggedIn && <Header currentRoute={currentRoute} />}
+        <Route exact path="/login" render={() => <Login history={history} />} />
+        <Route
+          exact
+          path="/innovation-capacity"
+          render={() => <InnovationFactor history={history} />}
+        />
+        <Route
+          exact
+          path="/groupsets"
+          render={() => <Groupsets history={history} />}
+        />
+      </Router>
+    </ThemeProvider>
   );
 }
 
