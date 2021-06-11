@@ -40,12 +40,14 @@ function App() {
         <Route
           exact
           path="/innovation-capacity"
-          render={() => <InnovationFactor history={history} />}
+          render={() => (
+            <InnovationFactor history={history} title={currentRoute} />
+          )}
         />
         <Route
           exact
           path="/groupsets"
-          render={() => <Groupsets history={history} />}
+          render={() => <Groupsets history={history} title={currentRoute} />}
         />
       </Router>
     </ThemeProvider>

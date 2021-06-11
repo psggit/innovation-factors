@@ -14,8 +14,8 @@ Layout.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   layout: {
-    padding: 64,
-    marginTop: 64,
+    padding: "30px 104px 64px 104px",
+    //marginTop: 64,
     width: "inherit",
     overflow: "scroll",
   },
