@@ -8,6 +8,7 @@ import { createBrowserHistory as createHistory } from "history";
 import Login from "Container/Login";
 import InnovationFactor from "Container/InnovationFactor";
 import Groupsets from "Container/Groupsets";
+import ImprovementResource from "Container/ImprovementResources";
 import { theme } from "./Theme";
 
 const history = createHistory();
@@ -48,6 +49,13 @@ function App() {
           exact
           path="/groupsets"
           render={() => <Groupsets history={history} title={currentRoute} />}
+        />
+        <Route
+          exact
+          path="/improvement-resources"
+          render={() => (
+            <ImprovementResource history={history} title={currentRoute} />
+          )}
         />
       </Router>
     </ThemeProvider>

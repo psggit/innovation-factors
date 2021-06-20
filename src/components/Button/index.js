@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     backgroundColor: "#474655",
   },
+  buttonPrimary: {
+    color: "#FFFFFF",
+    backgroundColor: theme.palette.primary.main,
+  },
   button: {
     borderRadius: 0,
     verticalAlign: "none",

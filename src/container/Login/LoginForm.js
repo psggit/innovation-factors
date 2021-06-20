@@ -47,6 +47,7 @@ function LoginForm({ classes, onSubmit }) {
       <form className={classes.loginForm}>
         <div style={{ marginBottom: 20 }}>
           <FormField
+            id="email"
             label="Email"
             type="email"
             classes={classes}
@@ -60,6 +61,7 @@ function LoginForm({ classes, onSubmit }) {
         </div>
         <div style={{ marginBottom: 20 }}>
           <FormField
+            id="password"
             label="Password"
             type="password"
             className={classes.inputField}

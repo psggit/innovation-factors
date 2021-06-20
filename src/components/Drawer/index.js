@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     marginTop: 75,
     [theme.breakpoints.down("sm")]: {
-      marginTop: 117,
+      marginTop: 107,
     },
   },
   drawerOpen: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     [theme.breakpoints.down("sm")]: {
-      marginTop: 117,
+      marginTop: 107,
     },
   },
   drawerClose: {
@@ -105,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(8),
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(8),
+      marginTop: 107,
     },
   },
 }));

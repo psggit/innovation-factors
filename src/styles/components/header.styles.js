@@ -5,9 +5,15 @@ export const styles = (theme) => ({
     padding: "10px",
     width: "100%",
     zIndex: "1201",
-    position: "relative",
+    position: "fixed",
+    left: 0,
+    right: 0,
+    top: 0,
     borderBottom: `5px solid ${theme.palette.primary.main}`,
     backgroundColor: "#fff",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
   iconWrapper: {
     display: "flex",
@@ -27,6 +33,10 @@ export const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     color: theme.palette.primary.main,
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "space-between",
+      marginTop: 10,
+    },
   },
   title: {
     fontFamily: `"Proxima_Nova_Bold", "Fallback", "sans-serif"`,

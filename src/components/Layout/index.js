@@ -15,9 +15,13 @@ Layout.propTypes = {
 const useStyles = makeStyles((theme) => ({
   layout: {
     padding: "30px 104px 64px 104px",
-    //marginTop: 64,
+    marginTop: 75,
     width: "inherit",
     overflow: "scroll",
+    [theme.breakpoints.down("sm")]: {
+      padding: "30px 30px 30px 30px",
+      marginTop: 107,
+    },
   },
 }));
 

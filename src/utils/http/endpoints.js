@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
 export default {
-  loginUser: () => "/login",
+  loginUser: () => "/user/userLogin.php",
+  getImprovementResource: () => "/if/improvementResources.php",
 };
