@@ -45,3 +45,17 @@ export function fetchImprovementResource(payload) {
       throw parseHttpError(err);
     });
 }
+
+export function fetchStages(payload) {
+  payload.userId = USER_ID;
+  return fetch(`${getBaseUrl()}${Endpoints.getStages()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}

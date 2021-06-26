@@ -4,6 +4,9 @@ export const styles = (theme) => ({
   },
   filterWrapper: {
     display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
   selectStyle: {
     width: 300,
@@ -51,9 +54,12 @@ export const styles = (theme) => ({
   },
   emptyStyle: {
     gridTemplateColumns: "1fr",
-    background: "#F3F3F7",
+    // background: "#F3F3F7",
     padding: 20,
     color: `${theme.palette.primary.main}`,
     width: "100%",
+  },
+  loaderStyle: {
+    zIndex: 1024,
   },
 });

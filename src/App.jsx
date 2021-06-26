@@ -9,6 +9,7 @@ import Login from "Container/Login";
 import InnovationFactor from "Container/InnovationFactor";
 import Groupsets from "Container/Groupsets";
 import ImprovementResource from "Container/ImprovementResources";
+import Stages from "Container/Stages";
 import { theme } from "./Theme";
 
 const history = createHistory();
@@ -56,6 +57,11 @@ function App() {
           render={() => (
             <ImprovementResource history={history} title={currentRoute} />
           )}
+        />
+        <Route
+          exact
+          path="/stages"
+          render={() => <Stages history={history} title={currentRoute} />}
         />
       </Router>
     </ThemeProvider>

@@ -2,39 +2,37 @@ import React, { useState, useEffect, useMemo } from "react";
 import { styles } from "./../../styles/container/improvementCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Layout from "./../../components/Layout";
+import Loader from "./../../components/Loader";
+import Inputbase from "./../../components/Inputbase";
 import PageTitle from "./../../components/PageTitle";
 import Select from "./../../components/Select";
-import { improvementCapacity } from "./../../mockData";
 import { getQueryParamByName } from "./../../utils/helpers";
 import { fetchImprovementResource } from "./../../utils/http/index";
 
+const contentTypeOptions = [
+  { id: 0, displayName: "All", name: "all" },
+  { id: 1, displayName: "Article", name: "article" },
+  { id: 2, displayName: "Video", name: "video" },
+];
+
 const ImprovementResource = ({ classes, title }) => {
-  const [improvementResourceData, setImprovementResourceData] = useState({});
+  const [loadingResourceData, setLoadingResourceData] = useState(false);
+  const [resourceData, setResourceData] = useState([]);
+
   const [stageOptions, setStageOptions] = useState([]);
   const [stage, setStage] = useState(
     getQueryParamByName("stageId") ? getQueryParamByName("stageId") : "0"
   );
-  const [resourceData, setResourceData] = useState([]);
+
+  const [contentTypeIdx, setContentTypeIdx] = useState("0");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    //setImprovementResourceData(improvementCapacity);
-
     getImprovementResource();
-
-    //const data = improvementCapacity;
-    // let stageOptionsData = data.stages.map((item) => {
-    //   return {
-    //     id: item.stageId,
-    //     name: item.stageName,
-    //   };
-    // });
-
-    // stageOptionsData.unshift({ id: "0", name: "All" });
-    // setStageOptions(stageOptionsData);
-    // setResourceData(data.resource);
   }, []);
 
   const getImprovementResource = () => {
+    setLoadingResourceData(true);
     fetchImprovementResource({ stage: "", type: "" })
       .then((response) => {
         const data = response.data;
@@ -47,9 +45,11 @@ const ImprovementResource = ({ classes, title }) => {
         stageOptionsData.unshift({ id: "0", name: "All" });
         setStageOptions(stageOptionsData);
         setResourceData(data.resource);
+        setLoadingResourceData(false);
       })
       .catch((error) => {
         console.log("Error in fetching improvement resources", error);
+        setLoadingResourceData(false);
       });
   };
 
@@ -57,21 +57,49 @@ const ImprovementResource = ({ classes, title }) => {
     setStage(e.target.value);
   };
 
+  const handleContentTypeChange = (e) => {
+    setContentTypeIdx(e.target.value);
+  };
+
+  const handleTextChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
   const handleBoxClick = (link) => {
     window.open(link);
   };
 
   const filteredResourceData = useMemo(() => {
-    if (stage === "0") {
-      return resourceData;
-    } else if (stage !== "none") {
-      return resourceData.filter((item) => {
+    let filteredResourceData = resourceData;
+    if (stage === "0" && contentTypeIdx === "0") {
+      filteredResourceData = resourceData;
+    }
+
+    if (stage !== "none" && stage !== "0") {
+      filteredResourceData = filteredResourceData.filter((item) => {
         return item.stageId === stage.toString();
       });
-    } else {
-      return [];
     }
-  }, [stage, resourceData]);
+
+    if (contentTypeIdx !== "none" && contentTypeIdx !== "0") {
+      filteredResourceData = filteredResourceData.filter((item) => {
+        return (
+          item.type ===
+          contentTypeOptions[
+            contentTypeOptions.findIndex((item) => item.id === contentTypeIdx)
+          ].name
+        );
+      });
+    }
+
+    if (searchText && searchText.trim().length > 0) {
+      filteredResourceData = filteredResourceData.filter((item) => {
+        return item.title.toLowerCase().includes(searchText.toLowerCase());
+      });
+    }
+
+    return filteredResourceData;
+  }, [stage, resourceData, contentTypeIdx, searchText]);
 
   return (
     <Layout>
@@ -87,6 +115,25 @@ const ImprovementResource = ({ classes, title }) => {
               handleSelectChange={handleStageChange}
             />
           </div>
+          <div className={classes.selectStyle}>
+            <Select
+              options={contentTypeOptions}
+              labelKey="displayName"
+              placeholder="Content Type"
+              defaultValue={contentTypeIdx}
+              handleSelectChange={handleContentTypeChange}
+            />
+          </div>
+          <div className={classes.selectStyle}>
+            <Inputbase
+              id="inputbase-text"
+              classname="input-base-class"
+              style={{ width: "100%" }}
+              defaultValue={searchText}
+              placeholder="Enter title"
+              handleTextChange={handleTextChange}
+            />
+          </div>
         </div>
         <div
           className={
@@ -95,7 +142,17 @@ const ImprovementResource = ({ classes, title }) => {
               : classes.emptyStyle
           }
         >
-          {filteredResourceData.length === 0 && <div>No records found</div>}
+          {!loadingResourceData && filteredResourceData.length === 0 && (
+            <div>No records found</div>
+          )}
+          {loadingResourceData && (
+            <Loader
+              classname={classes.loaderStyle}
+              isOpen={true}
+              hasLoadingText={true}
+              loadingText="Loading..."
+            />
+          )}
           {filteredResourceData.length > 0 &&
             filteredResourceData.map((item) => {
               return (

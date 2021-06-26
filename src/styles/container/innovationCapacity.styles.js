@@ -90,6 +90,7 @@ export const styles = (theme) => ({
   },
   textStyle: {
     textTransform: "capitalize",
+    width: 200,
   },
   subtitle: {
     padding: "10px 0",
