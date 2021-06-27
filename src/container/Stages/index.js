@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import PageTitle from "./../../components/PageTitle";
 import Button from "./../../components/Button";
+import Loader from "./../../components/Loader";
 import clsx from "clsx";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { fetchStages } from "./../../utils/http";
@@ -13,6 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const Stages = ({ classes, history, title }) => {
   const [stages, setStages] = useState([]);
+  const [isLoadingStages, setIsLoadingStages] = useState(false);
   const [showDetails, setShowDetails] = useState("");
 
   useEffect(() => {
@@ -30,9 +32,22 @@ const Stages = ({ classes, history, title }) => {
     history.push(`/improvement-resources?stageId=${stageId}`);
   };
 
+  const getStagesData = () => {
+    setIsLoadingStages(true);
+    fetchStages({ stage: "", type: "" })
+      .then((response) => {
+        setStages(response.data.stages);
+        setIsLoadingStages(false);
+      })
+      .catch((error) => {
+        setIsLoadingStages(false);
+        console.log("Error in fetching stages", error);
+      });
+  };
+
   const DataBox = (props) => {
     return (
-      <Card>
+      <Card style={{ marginBottom: 20 }}>
         <div className={classes.databox}>
           <div className={classes.part1}>
             <div className={classes.textStyle}>{props.data.stageName}</div>
@@ -83,23 +98,25 @@ const Stages = ({ classes, history, title }) => {
     );
   };
 
-  const getStagesData = () => {
-    fetchStages({ stage: "", type: "" })
-      .then((response) => {
-        setStages(response.data.stages);
-      })
-      .catch((error) => {
-        console.log("Error in fetching stages", error);
-      });
-  };
-
   return (
     <Layout>
       <PageTitle title={title} />
       <div>
-        {stages.map((item) => {
-          return <DataBox data={item} />;
-        })}
+        {isLoadingStages && (
+          <Loader
+            classname={classes.loaderStyle}
+            isOpen={true}
+            hasLoadingText={true}
+            loadingText="Loading..."
+          />
+        )}
+        {!isLoadingStages && stages.length === 0 && (
+          <div className={classes.emptyStyle}>No stages found</div>
+        )}
+        {!isLoadingStages &&
+          stages.map((item) => {
+            return <DataBox data={item} />;
+          })}
       </div>
     </Layout>
   );

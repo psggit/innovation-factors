@@ -137,7 +137,7 @@ const ImprovementResource = ({ classes, title }) => {
         </div>
         <div
           className={
-            filteredResourceData.length !== 0
+            !loadingResourceData && filteredResourceData.length !== 0
               ? classes.videoWrapper
               : classes.emptyStyle
           }

@@ -59,3 +59,17 @@ export function fetchStages(payload) {
       throw parseHttpError(err);
     });
 }
+
+export function fetchComments(payload) {
+  payload.userId = USER_ID;
+  return fetch(`${getBaseUrl()}${Endpoints.getComments()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}

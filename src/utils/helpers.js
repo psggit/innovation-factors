@@ -13,3 +13,7 @@ export function getQueryParamByName(
 
   return queryObj[name];
 }
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
