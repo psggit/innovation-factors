@@ -11,6 +11,10 @@ const Header = ({ classes, currentRoute }) => {
   const links = require("./routes").links;
   const [drawerState, setDrawerState] = React.useState(false);
 
+  const COMPANY_NAME = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).companyName
+    : "";
+
   const handleRouteChange = (selectedRoute) => {
     if (currentRoute !== selectedRoute) window.location.assign(selectedRoute);
     setDrawerState(false);
@@ -42,7 +46,7 @@ const Header = ({ classes, currentRoute }) => {
         </div>
         <div className={classes.titleWrapper}>
           <div>
-            <div className={classes.title}>COMPANY NAME</div>
+            <div className={classes.title}>{COMPANY_NAME}</div>
             <div>DASHBOARD</div>
           </div>
           <div className={classes.logout} onClick={handleLogout}>

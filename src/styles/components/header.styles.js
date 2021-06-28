@@ -41,6 +41,7 @@ export const styles = (theme) => ({
   title: {
     fontFamily: `"Proxima_Nova_Bold", "Fallback", "sans-serif"`,
     marginRight: 10,
+    textTransform: "uppercase",
   },
 
   logout: {

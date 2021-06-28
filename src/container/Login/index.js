@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "./LoginForm";
 import { userInfo } from "./../../mockData";
 import { login } from "./../../utils/http";
@@ -23,7 +23,7 @@ const Login = ({ history }) => {
       // )
       .then((response) => {
         let userData = response.data;
-        console.log("resp", response);
+        //console.log("resp", response);
         userData.isLoggedIn = true;
         localStorage.setItem("userInfo", JSON.stringify(userData));
         history.push("/innovation-capacity");

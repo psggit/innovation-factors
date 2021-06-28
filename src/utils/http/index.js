@@ -73,3 +73,18 @@ export function fetchComments(payload) {
       throw parseHttpError(err);
     });
 }
+
+export function fetchGroupsets(payload) {
+  console.log("id", USER_ID);
+  payload.userId = USER_ID;
+  return fetch(`${getBaseUrl()}${Endpoints.getGroupsets()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}

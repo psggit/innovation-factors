@@ -4,4 +4,5 @@ export default {
   getImprovementResource: () => "/if/improvementResources.php",
   getStages: () => "/if/stages.php",
   getComments: () => "/if/comments.php",
+  getGroupsets: () => "/if/groupsets.php",
 };

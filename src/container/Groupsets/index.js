@@ -5,35 +5,59 @@ import Grid from "@material-ui/core/Grid";
 import { styles } from "../../styles/container/groupsets.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Layout from "Components/Layout";
+import Loader from "Components/Loader";
 import PageTitle from "Components/PageTitle";
-import { groupsetsData } from "./../../mockData";
+import { fetchGroupsets } from "./../../utils/http";
 
 const getColor = (value) => {
   let color = "";
-  if (value > 7 && value <= 7.5) color = "red";
-  if (value > 7.5 && value <= 8) color = "blue";
+  if (value >= 0 && value < 1) color = "#E34040";
+  else if (value >= 1 && value < 2) color = "#DD564D";
+  else if (value >= 2 && value < 3) color = "#DD674D";
+  else if (value >= 3 && value < 4) color = "#DD704D";
+  else if (value >= 4 && value < 5) color = "#DD814D";
+  else if (value >= 5 && value < 6) color = "#6CAAE2";
+  else if (value >= 6 && value < 7) color = "#50A0E9";
+  else if (value >= 7 && value < 8) color = "#3A9FE8";
+  else if (value >= 8 && value < 9) color = "#3A7FE8";
+  else if (value >= 9 && value < 10) color = "#176FF3";
+  else color = "#023F9B";
   return color;
 };
 
 const Groupsets = ({ classes, history, title }) => {
+  const [isLoadingGroupsets, setIsLoadingGroupsets] = useState(false);
   const [groupsetsDataObj, setGroupsetsDataObj] = useState({});
 
   useEffect(() => {
-    setGroupsetsDataObj(groupsetsData);
+    fetchGroupSetsData();
   }, []);
 
-  const FormRow = ({ data }) => {
+  const fetchGroupSetsData = () => {
+    setIsLoadingGroupsets(true);
+    fetchGroupsets({})
+      .then((response) => {
+        setIsLoadingGroupsets(false);
+        setGroupsetsDataObj(response.data);
+      })
+      .catch((error) => {
+        setIsLoadingGroupsets(false);
+        console.log("Error in fetching groupsets", error);
+      });
+  };
+
+  const FormRow = ({ dataItem }) => {
     return (
       <React.Fragment>
         <Grid item xs={2} className={classes.grid}>
           <Paper className={classes.paper}>
-            <div className={classes.title}>&#10095; {data}</div>
+            <div className={classes.title}>&#10095; {dataItem}</div>
             <div className={classes.subtitle}>
-              {groupsetsData.data[data]["description"]}
+              {groupsetsDataObj[dataItem]["description"]}
             </div>
           </Paper>
         </Grid>
-        {Object.keys(groupsetsData.data[data]).map((keyName, keyIndex) => {
+        {Object.keys(groupsetsDataObj[dataItem]).map((keyName, keyIndex) => {
           if (keyName !== "description") {
             return (
               <Grid
@@ -41,18 +65,20 @@ const Groupsets = ({ classes, history, title }) => {
                 xs={1}
                 className={classes.grid}
                 style={{
-                  background: `${getColor(groupsetsData.data[data][keyName])}`,
+                  background: `${getColor(
+                    groupsetsDataObj[dataItem][keyName]
+                  )}`,
                 }}
               >
                 <Paper
                   className={classes.paper}
                   style={{
                     background: `${getColor(
-                      groupsetsData.data[data][keyName]
+                      groupsetsDataObj[dataItem][keyName]
                     )}`,
                   }}
                 >
-                  {groupsetsData.data[data][keyName]}
+                  {groupsetsDataObj[dataItem][keyName]}
                 </Paper>
               </Grid>
             );
@@ -63,17 +89,18 @@ const Groupsets = ({ classes, history, title }) => {
   };
 
   const FormColumn = () => {
+    console.log("data", groupsetsDataObj);
     return (
       <React.Fragment>
         <Grid item xs={2} className={classes.grid}>
           <Paper className={classes.paper}>Select Highlighed groups</Paper>
         </Grid>
 
-        {groupsetsData.data.stages.map((item) => {
+        {groupsetsDataObj.stages.map((item) => {
           return (
             <Grid item xs={1} className={classes.grid}>
               <Paper className={clsx(classes.paper, classes.fontStyle)}>
-                {item.name}
+                {item.stageName}
               </Paper>
             </Grid>
           );
@@ -86,18 +113,32 @@ const Groupsets = ({ classes, history, title }) => {
     <Layout>
       <div className={classes.root}>
         <PageTitle title={title} />
-        <Grid container>
-          <Grid container item>
-            <FormColumn />
+        {isLoadingGroupsets && (
+          <Loader
+            classname={classes.loaderStyle}
+            isOpen={true}
+            hasLoadingText={true}
+            loadingText="Loading..."
+          />
+        )}
+        {!isLoadingGroupsets && Object.keys(groupsetsDataObj).length === 0 && (
+          <div className={classes.emptyStyle}>No groupsets found</div>
+        )}
+        {!isLoadingGroupsets && Object.keys(groupsetsDataObj).length > 0 && (
+          <Grid container>
+            <Grid container item>
+              <FormColumn />
+            </Grid>
+            {groupsetsDataObj.groups.map((groupData) => {
+              console.log("group", groupData);
+              return (
+                <Grid container item>
+                  <FormRow dataItem={groupData} />
+                </Grid>
+              );
+            })}
           </Grid>
-          {groupsetsData.data.groupSets.map((item) => {
-            return (
-              <Grid container item>
-                <FormRow data={item} />
-              </Grid>
-            );
-          })}
-        </Grid>
+        )}
       </div>
     </Layout>
   );

@@ -9,6 +9,7 @@ export const styles = (theme) => ({
     width: "400px",
     border: `3px solid ${theme.palette.primary.main}`,
     padding: "40px",
+    textAlign: "center",
     [theme.breakpoints.down("sm")]: {
       width: "calc(100vw - 40px)",
       margin: "20px",
@@ -47,6 +48,15 @@ export const styles = (theme) => ({
       "&.Mui-focused fieldset": {
         borderColor: theme.palette.primary.main,
       },
+    },
+  },
+  logoImg: {
+    width: 300,
+    height: 100,
+    marginBottom: 20,
+    objectFit: "contain",
+    [theme.breakpoints.down("sm")]: {
+      width: 200,
     },
   },
 });

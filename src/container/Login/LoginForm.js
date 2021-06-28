@@ -5,6 +5,7 @@ import { styles } from "../../styles/container/login.styles";
 import { withStyles } from "@material-ui/core/styles";
 import FormField from "./FormField";
 import Button from "../../components/Button";
+import IF_LOGO from "./../../assets/IF_logo.jpg";
 
 //setting the initial values
 const initialValues = {
@@ -45,6 +46,7 @@ function LoginForm({ classes, onSubmit }) {
   return (
     <div className={classes.loginWrapper}>
       <form className={classes.loginForm}>
+        <img src={IF_LOGO} alt="if_logo" className={classes.logoImg} />
         <div style={{ marginBottom: 20 }}>
           <FormField
             id="email"
