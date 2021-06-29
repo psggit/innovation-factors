@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
+import Notification from "./../../components/Notification";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
@@ -16,6 +17,15 @@ const Stages = ({ classes, history, title }) => {
   const [stages, setStages] = useState([]);
   const [isLoadingStages, setIsLoadingStages] = useState(false);
   const [showDetails, setShowDetails] = useState("");
+
+  const [errorObject, setErrorObject] = useState({
+    open: false,
+    message: "",
+  });
+
+  const resetError = () => {
+    setErrorObject({ open: false, message: "" });
+  };
 
   useEffect(() => {
     getStagesData();
@@ -41,6 +51,10 @@ const Stages = ({ classes, history, title }) => {
       })
       .catch((error) => {
         setIsLoadingStages(false);
+        setErrorObject({
+          open: true,
+          message: error.message,
+        });
         console.log("Error in fetching stages", error);
       });
   };
@@ -114,10 +128,18 @@ const Stages = ({ classes, history, title }) => {
           <div className={classes.emptyStyle}>No stages found</div>
         )}
         {!isLoadingStages &&
-          stages.map((item) => {
-            return <DataBox data={item} />;
+          stages.map((item, index) => {
+            return <DataBox key={`stages-${index}`} data={item} />;
           })}
       </div>
+      {errorObject.open && (
+        <Notification
+          handleClose={resetError}
+          open={errorObject.open}
+          message={errorObject.message}
+          messageType="error"
+        />
+      )}
     </Layout>
   );
 };

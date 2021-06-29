@@ -104,6 +104,7 @@ export const styles = (theme) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: "20px 0px 0 0px",
+    alignItems: "center",
   },
   titleWrapper: {
     display: "flex",
@@ -122,6 +123,18 @@ export const styles = (theme) => ({
   },
   contentWrapper: {
     marginBottom: 50,
+  },
+  wordCloudStyle: {
+    width: 400,
+    height: 400,
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, 0%)",
+    [theme.breakpoints.down("sm")]: {
+      width: 200,
+      height: 200,
+    },
   },
   // expand: {
   //   transform: "rotate(0deg)",

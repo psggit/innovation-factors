@@ -6,6 +6,7 @@ import { styles } from "../../styles/container/groupsets.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Layout from "Components/Layout";
 import Loader from "Components/Loader";
+import Notification from "Components/Notification";
 import PageTitle from "Components/PageTitle";
 import { fetchGroupsets } from "./../../utils/http";
 
@@ -29,6 +30,15 @@ const Groupsets = ({ classes, history, title }) => {
   const [isLoadingGroupsets, setIsLoadingGroupsets] = useState(false);
   const [groupsetsDataObj, setGroupsetsDataObj] = useState({});
 
+  const [errorObject, setErrorObject] = useState({
+    open: false,
+    message: "",
+  });
+
+  const resetError = () => {
+    setErrorObject({ open: false, message: "" });
+  };
+
   useEffect(() => {
     fetchGroupSetsData();
   }, []);
@@ -42,6 +52,10 @@ const Groupsets = ({ classes, history, title }) => {
       })
       .catch((error) => {
         setIsLoadingGroupsets(false);
+        setErrorObject({
+          open: true,
+          message: error.message,
+        });
         console.log("Error in fetching groupsets", error);
       });
   };
@@ -69,6 +83,7 @@ const Groupsets = ({ classes, history, title }) => {
                     groupsetsDataObj[dataItem][keyName]
                   )}`,
                 }}
+                key={`group-row-column-${keyIndex}`}
               >
                 <Paper
                   className={classes.paper}
@@ -89,16 +104,20 @@ const Groupsets = ({ classes, history, title }) => {
   };
 
   const FormColumn = () => {
-    console.log("data", groupsetsDataObj);
     return (
       <React.Fragment>
         <Grid item xs={2} className={classes.grid}>
           <Paper className={classes.paper}>Select Highlighed groups</Paper>
         </Grid>
 
-        {groupsetsDataObj.stages.map((item) => {
+        {groupsetsDataObj.stages.map((item, index) => {
           return (
-            <Grid item xs={1} className={classes.grid}>
+            <Grid
+              item
+              xs={1}
+              className={classes.grid}
+              key={`group-column-${index}`}
+            >
               <Paper className={clsx(classes.paper, classes.fontStyle)}>
                 {item.stageName}
               </Paper>
@@ -129,10 +148,9 @@ const Groupsets = ({ classes, history, title }) => {
             <Grid container item>
               <FormColumn />
             </Grid>
-            {groupsetsDataObj.groups.map((groupData) => {
-              console.log("group", groupData);
+            {groupsetsDataObj.groups.map((groupData, index) => {
               return (
-                <Grid container item>
+                <Grid container item key={`group-row-${index}`}>
                   <FormRow dataItem={groupData} />
                 </Grid>
               );
@@ -140,6 +158,14 @@ const Groupsets = ({ classes, history, title }) => {
           </Grid>
         )}
       </div>
+      {errorObject.open && (
+        <Notification
+          handleClose={resetError}
+          open={errorObject.open}
+          message={errorObject.message}
+          messageType="error"
+        />
+      )}
     </Layout>
   );
 };

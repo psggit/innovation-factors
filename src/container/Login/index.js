@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import LoginForm from "./LoginForm";
-import { userInfo } from "./../../mockData";
+import Notification from "./../../components/Notification";
 import { login } from "./../../utils/http";
 
 const Login = ({ history }) => {
+  const [errorObject, setErrorObject] = useState({ open: false, message: "" });
+
+  const resetError = () => {
+    setErrorObject({ open: false, message: "" });
+  };
+
   const handleLogin = (value) => {
     // let userData = userInfo;
     // userData.isLoggedIn = true;
@@ -29,10 +35,26 @@ const Login = ({ history }) => {
         history.push("/innovation-capacity");
       })
       .catch((error) => {
+        setErrorObject({
+          open: true,
+          message: error.message,
+        });
         console.log("Error in logging in", error);
       });
   };
-  return <LoginForm onSubmit={handleLogin} />;
+  return (
+    <React.Fragment>
+      {errorObject.open && (
+        <Notification
+          handleClose={resetError}
+          open={errorObject.open}
+          message={errorObject.message}
+          messageType="error"
+        />
+      )}
+      <LoginForm onSubmit={handleLogin} />
+    </React.Fragment>
+  );
 };
 
 export default Login;

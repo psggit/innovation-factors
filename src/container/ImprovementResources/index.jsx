@@ -3,6 +3,7 @@ import { styles } from "./../../styles/container/improvementCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Layout from "./../../components/Layout";
 import Loader from "./../../components/Loader";
+import Notification from "Components/Notification";
 import Inputbase from "./../../components/Inputbase";
 import PageTitle from "./../../components/PageTitle";
 import Select from "./../../components/Select";
@@ -27,6 +28,15 @@ const ImprovementResource = ({ classes, title }) => {
   const [contentTypeIdx, setContentTypeIdx] = useState("0");
   const [searchText, setSearchText] = useState("");
 
+  const [errorObject, setErrorObject] = useState({
+    open: false,
+    message: "",
+  });
+
+  const resetError = () => {
+    setErrorObject({ open: false, message: "" });
+  };
+
   useEffect(() => {
     getImprovementResource();
   }, []);
@@ -48,6 +58,10 @@ const ImprovementResource = ({ classes, title }) => {
         setLoadingResourceData(false);
       })
       .catch((error) => {
+        setErrorObject({
+          open: true,
+          message: error.message,
+        });
         console.log("Error in fetching improvement resources", error);
         setLoadingResourceData(false);
       });
@@ -154,9 +168,10 @@ const ImprovementResource = ({ classes, title }) => {
             />
           )}
           {filteredResourceData.length > 0 &&
-            filteredResourceData.map((item) => {
+            filteredResourceData.map((item, index) => {
               return (
                 <div
+                  key={`improvement-${index}`}
                   className={classes.videoStyle}
                   onClick={() => handleBoxClick(item.link)}
                 >
@@ -186,24 +201,14 @@ const ImprovementResource = ({ classes, title }) => {
         </div>
       </div>
 
-      {/* <div className={classes.selectStyle}>
-          <Select
-            options={stageOptions}
-            labelKey="name"
-            placeholder="Main event type"
-            defaultValue={stage}
-            handleSelectChange={handleStageChange}
-          />
-        </div>
-        <div className={classes.selectStyle}>
-          <Select
-            options={stageOptions}
-            labelKey="name"
-            placeholder="Main event type"
-            defaultValue={stage}
-            handleSelectChange={handleStageChange}
-          />
-        </div> */}
+      {errorObject.open && (
+        <Notification
+          handleClose={resetError}
+          open={errorObject.open}
+          message={errorObject.message}
+          messageType="error"
+        />
+      )}
     </Layout>
   );
 };

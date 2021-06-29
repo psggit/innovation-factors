@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactWordcloud from "react-wordcloud";
 import Layout from "Components/Layout";
+import Notification from "Components/Notification";
 import Loader from "Components/Loader";
+import PageTitle from "./../../components/PageTitle";
 import { styles } from "./../../styles/container/innovationCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
 import { fetchComments } from "./../../utils/http";
@@ -9,10 +11,25 @@ import { getRandomInt } from "./../../utils/helpers";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
 
-const Comments = ({ classes }) => {
+const reactCloudOptions = {
+  enableTooltip: false,
+  deterministic: false,
+  //fontSizes: [15, 60],
+  //scale: "sqrt",
+};
+
+const Comments = ({ classes, title }) => {
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [wordCloudArray, setWordCloudArray] = useState([]);
+  const [errorObject, setErrorObject] = useState({
+    open: false,
+    message: "",
+  });
+
+  const resetError = () => {
+    setErrorObject({ open: false, message: "" });
+  };
 
   useEffect(() => {
     getCommentsData();
@@ -34,6 +51,10 @@ const Comments = ({ classes }) => {
       })
       .catch((error) => {
         setIsLoadingComments(false);
+        setErrorObject({
+          open: true,
+          message: error.message,
+        });
         console.log("Error in fetching comments", error);
       });
   };
@@ -74,6 +95,7 @@ const Comments = ({ classes }) => {
 
   return (
     <Layout>
+      <PageTitle title={title} />
       <div>
         {isLoadingComments && (
           <Loader
@@ -84,15 +106,30 @@ const Comments = ({ classes }) => {
           />
         )}
         {!isLoadingComments && comments.length > 0 && (
-          <ReactWordcloud words={wordCloudArray} />
+          <div className={classes.wordCloudStyle}>
+            <ReactWordcloud
+              words={wordCloudArray}
+              options={reactCloudOptions}
+            />
+          </div>
         )}
         {!isLoadingComments &&
           comments.length > 0 &&
-          comments.map((item) => <DataBox data={item} />)}
+          comments.map((item, index) => (
+            <DataBox key={`comment-${index}`} data={item} />
+          ))}
         {!isLoadingComments && comments.length === 0 && (
           <div className={classes.emptyStyle}>No comments found</div>
         )}
       </div>
+      {errorObject.open && (
+        <Notification
+          handleClose={resetError}
+          open={errorObject.open}
+          message={errorObject.message}
+          messageType="error"
+        />
+      )}
     </Layout>
   );
 };

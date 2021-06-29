@@ -5,4 +5,5 @@ export default {
   getStages: () => "/if/stages.php",
   getComments: () => "/if/comments.php",
   getGroupsets: () => "/if/groupsets.php",
+  getDashboard: () => "/if/dashboard.php",
 };

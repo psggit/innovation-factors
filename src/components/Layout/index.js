@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       padding: "30px 30px 30px 30px",
       marginTop: 107,
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.up("sm")]: {
       padding: "30px 30px 30px 100px",
     },
   },
