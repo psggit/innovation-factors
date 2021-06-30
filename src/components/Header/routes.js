@@ -56,6 +56,6 @@ export const links = [
       />
     ),
     path: "admin",
-    hide: userType === "admin",
+    hide: userType !== "admin",
   },
 ];

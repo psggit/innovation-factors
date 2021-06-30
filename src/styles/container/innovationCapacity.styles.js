@@ -116,8 +116,8 @@ export const styles = (theme) => ({
   },
   titleWrapperTransition: {},
   factorDataDesc: {
-    background: "#ccbcbc",
-    color: "#FFFFFF",
+    background: "#efefef",
+    color: "#000",
     marginBottom: 10,
     padding: "10px 5px",
   },
@@ -136,14 +136,4 @@ export const styles = (theme) => ({
       height: 200,
     },
   },
-  // expand: {
-  //   transform: "rotate(0deg)",
-  //   marginLeft: "auto",
-  //   transition: theme.transitions.create("transform", {
-  //     duration: theme.transitions.duration.shortest,
-  //   }),
-  // },
-  // expandOpen: {
-  //   transform: "rotate(180deg)",
-  // },
 });

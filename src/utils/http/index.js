@@ -15,9 +15,13 @@ const getBaseUrl = () => {
   return config.API_SERVER;
 };
 
-const USER_ID = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo")).userId
-  : "";
+const getUserId = () => {
+  const USER_ID = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).userId
+    : "";
+
+  return USER_ID;
+};
 
 export function login(payload) {
   return fetch(`${getBaseUrl()}${Endpoints.loginUser()}`, {
@@ -33,7 +37,7 @@ export function login(payload) {
 }
 
 export function fetchImprovementResource(payload) {
-  payload.userId = USER_ID;
+  payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getImprovementResource()}`, {
     method: "post",
     body: JSON.stringify(payload),
@@ -47,7 +51,7 @@ export function fetchImprovementResource(payload) {
 }
 
 export function fetchStages(payload) {
-  payload.userId = USER_ID;
+  payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getStages()}`, {
     method: "post",
     body: JSON.stringify(payload),
@@ -61,7 +65,7 @@ export function fetchStages(payload) {
 }
 
 export function fetchComments(payload) {
-  payload.userId = USER_ID;
+  payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getComments()}`, {
     method: "post",
     body: JSON.stringify(payload),
@@ -75,7 +79,7 @@ export function fetchComments(payload) {
 }
 
 export function fetchGroupsets(payload) {
-  payload.userId = USER_ID;
+  payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getGroupsets()}`, {
     method: "post",
     body: JSON.stringify(payload),
@@ -89,7 +93,7 @@ export function fetchGroupsets(payload) {
 }
 
 export function fetchDashboard(payload) {
-  payload.userId = USER_ID;
+  payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getDashboard()}`, {
     method: "post",
     body: JSON.stringify(payload),
