@@ -6,4 +6,7 @@ export default {
   getComments: () => "/if/comments.php",
   getGroupsets: () => "/if/groupsets.php",
   getDashboard: () => "/if/dashboard.php",
+  updatePassword: () => "/user/userChangePassword.php",
+  getEmployees: () => "/user/getEmployees.php",
+  getManagers: () => "/user/getManagers.php",
 };

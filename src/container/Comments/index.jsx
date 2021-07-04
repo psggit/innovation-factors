@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactWordcloud from "react-wordcloud";
 import Layout from "Components/Layout";
 import Notification from "Components/Notification";
 import Loader from "Components/Loader";
+import Button from "Components/Button";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import PageTitle from "./../../components/PageTitle";
 import { styles } from "./../../styles/container/innovationCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -26,6 +29,9 @@ const Comments = ({ classes, title }) => {
     open: false,
     message: "",
   });
+
+  const [isSorted, setIsSorted] = useState(true);
+  const [sortDirection, setSortDirection] = useState("asc");
 
   const resetError = () => {
     setErrorObject({ open: false, message: "" });
@@ -57,6 +63,11 @@ const Comments = ({ classes, title }) => {
         });
         console.log("Error in fetching comments", error);
       });
+  };
+
+  const handleSort = () => {
+    // if (isSorted && sortDirection === "asc") setSortDirection("desc");
+    // else if (isSorted && sortDirection === "desc") setSortDirection("asc");
   };
 
   const DataBox = (props) => {
@@ -93,10 +104,44 @@ const Comments = ({ classes, title }) => {
     );
   };
 
+  // const renderWordCloud = useCallback(() => {
+  //   console.log("render wrd cloud");
+  //   return (
+  //     <div className={classes.wordCloudStyle}>
+  //       <div>hello</div>
+  //     </div>
+  //   );
+  // }, []);
+
+  // const RenderWordCloud = useCallback(() => {
+  //   console.log("render wrd cloud");
+  //   return (
+  //     <div className={classes.wordCloudStyle}>
+  //       <ReactWordcloud words={wordCloudArray} options={reactCloudOptions} />
+  //     </div>
+  //   );
+  // }, []);
+
   return (
     <Layout>
       <PageTitle title={title} />
       <div>
+        {/* <div>
+          <Button
+            text="Text"
+            icon={
+              isSorted && sortDirection === "asc" ? (
+                <ArrowUpwardIcon />
+              ) : (
+                <ArrowDownwardIcon />
+              )
+            }
+            style={{ display: "flex", alignItems: "center" }}
+            buttonWithIcon={true}
+            color="primary"
+            onClick={handleSort}
+          />
+        </div> */}
         {isLoadingComments && (
           <Loader
             classname={classes.loaderStyle}

@@ -14,7 +14,9 @@ const StandardButton = (props) => {
     onClick,
     variant,
     id,
+    icon,
     useRealText,
+    buttonWithIcon,
   } = props;
 
   const classes = useStyles();
@@ -43,7 +45,16 @@ const StandardButton = (props) => {
     disabled,
   };
 
-  return <Button {...buttonProps}>{text}</Button>;
+  if (buttonWithIcon) {
+    return (
+      <Button {...buttonProps}>
+        <span className="label">{text}</span>
+        <span className="icon">{icon}</span>
+      </Button>
+    );
+  } else {
+    return <Button {...buttonProps}>{text}</Button>;
+  }
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +93,7 @@ StandardButton.defaultProps = {
 
 StandardButton.propTypes = {
   id: PropTypes.string,
+  icon: PropTypes.node,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   text: PropTypes.string,
@@ -90,6 +102,7 @@ StandardButton.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   useRealText: PropTypes.bool,
+  buttonWithIcon: PropTypes.bool,
 };
 
 export default StandardButton;

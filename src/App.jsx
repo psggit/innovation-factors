@@ -11,6 +11,7 @@ import Groupsets from "Container/Groupsets";
 import ImprovementResource from "Container/ImprovementResources";
 import Stages from "Container/Stages";
 import Comments from "Container/Comments";
+import Admin from "Container/Admin";
 import { theme } from "./Theme";
 
 const history = createHistory();
@@ -68,6 +69,11 @@ function App() {
           exact
           path="/comments"
           render={() => <Comments history={history} title={currentRoute} />}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={() => <Admin history={history} title={currentRoute} />}
         />
       </Router>
     </ThemeProvider>

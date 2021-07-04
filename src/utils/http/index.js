@@ -36,6 +36,20 @@ export function login(payload) {
     });
 }
 
+export function resetUserPassword(payload) {
+  payload.userId = getUserId();
+  return fetch(`${getBaseUrl()}${Endpoints.updatePassword()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}
+
 export function fetchImprovementResource(payload) {
   payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getImprovementResource()}`, {
@@ -95,6 +109,33 @@ export function fetchGroupsets(payload) {
 export function fetchDashboard(payload) {
   payload.userId = getUserId();
   return fetch(`${getBaseUrl()}${Endpoints.getDashboard()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}
+
+export function fetchEmployees(payload) {
+  return fetch(`${getBaseUrl()}${Endpoints.getEmployees()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}
+
+export function fetchManagers(payload) {
+  payload.userId = getUserId();
+  return fetch(`${getBaseUrl()}${Endpoints.getManagers()}`, {
     method: "post",
     body: JSON.stringify(payload),
   })

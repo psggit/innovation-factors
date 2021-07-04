@@ -84,19 +84,23 @@ const ImprovementResource = ({ classes, title }) => {
   };
 
   const filteredResourceData = useMemo(() => {
-    let filteredResourceData = resourceData;
-    if (stage === "0" && contentTypeIdx === "0") {
-      filteredResourceData = resourceData;
+    let filteredResourceList = resourceData;
+    console.log("content", contentTypeIdx);
+    if (stage.toString() === "0" && contentTypeIdx.toString() === "0") {
+      filteredResourceList = resourceData;
     }
 
-    if (stage !== "none" && stage !== "0") {
-      filteredResourceData = filteredResourceData.filter((item) => {
+    if (stage.toString() !== "none" && stage.toString() !== "0") {
+      filteredResourceList = filteredResourceList.filter((item) => {
         return item.stageId === stage.toString();
       });
     }
 
-    if (contentTypeIdx !== "none" && contentTypeIdx !== "0") {
-      filteredResourceData = filteredResourceData.filter((item) => {
+    if (
+      contentTypeIdx.toString() !== "none" &&
+      contentTypeIdx.toString() !== "0"
+    ) {
+      filteredResourceList = filteredResourceList.filter((item) => {
         return (
           item.type ===
           contentTypeOptions[
@@ -107,12 +111,12 @@ const ImprovementResource = ({ classes, title }) => {
     }
 
     if (searchText && searchText.trim().length > 0) {
-      filteredResourceData = filteredResourceData.filter((item) => {
+      filteredResourceList = filteredResourceList.filter((item) => {
         return item.title.toLowerCase().includes(searchText.toLowerCase());
       });
     }
 
-    return filteredResourceData;
+    return filteredResourceList;
   }, [stage, resourceData, contentTypeIdx, searchText]);
 
   return (
