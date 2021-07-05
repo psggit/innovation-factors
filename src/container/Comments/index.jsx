@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useMemo } from "react";
 import ReactWordcloud from "react-wordcloud";
 import Layout from "Components/Layout";
 import Notification from "Components/Notification";
 import Loader from "Components/Loader";
-import Button from "Components/Button";
+import Inputbase from "./../../components/Inputbase";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import PageTitle from "./../../components/PageTitle";
@@ -13,6 +14,7 @@ import { fetchComments } from "./../../utils/http";
 import { getRandomInt } from "./../../utils/helpers";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
+import { orderBy } from "lodash";
 
 const reactCloudOptions = {
   enableTooltip: false,
@@ -29,9 +31,8 @@ const Comments = ({ classes, title }) => {
     open: false,
     message: "",
   });
-
-  const [isSorted, setIsSorted] = useState(true);
   const [sortDirection, setSortDirection] = useState("asc");
+  const [searchText, setSearchText] = useState("");
 
   const resetError = () => {
     setErrorObject({ open: false, message: "" });
@@ -40,6 +41,26 @@ const Comments = ({ classes, title }) => {
   useEffect(() => {
     getCommentsData();
   }, []);
+
+  const filteredCommentsData = useMemo(() => {
+    let filteredComments = comments;
+
+    if (searchText && searchText.trim().length > 0) {
+      filteredComments = comments.filter((item) => {
+        return item.commentText
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
+      });
+    }
+
+    filteredComments = orderBy(filteredComments, ["score"], [sortDirection]);
+
+    return filteredComments;
+  }, [searchText, sortDirection, comments]);
+
+  const handleTextChange = (e) => {
+    setSearchText(e.target.value);
+  };
 
   const getCommentsData = () => {
     setIsLoadingComments(true);
@@ -66,8 +87,8 @@ const Comments = ({ classes, title }) => {
   };
 
   const handleSort = () => {
-    // if (isSorted && sortDirection === "asc") setSortDirection("desc");
-    // else if (isSorted && sortDirection === "desc") setSortDirection("asc");
+    if (sortDirection === "asc") setSortDirection("desc");
+    else if (sortDirection === "desc") setSortDirection("asc");
   };
 
   const DataBox = (props) => {
@@ -104,44 +125,33 @@ const Comments = ({ classes, title }) => {
     );
   };
 
-  // const renderWordCloud = useCallback(() => {
-  //   console.log("render wrd cloud");
-  //   return (
-  //     <div className={classes.wordCloudStyle}>
-  //       <div>hello</div>
-  //     </div>
-  //   );
-  // }, []);
-
-  // const RenderWordCloud = useCallback(() => {
-  //   console.log("render wrd cloud");
-  //   return (
-  //     <div className={classes.wordCloudStyle}>
-  //       <ReactWordcloud words={wordCloudArray} options={reactCloudOptions} />
-  //     </div>
-  //   );
-  // }, []);
-
   return (
     <Layout>
       <PageTitle title={title} />
       <div>
-        {/* <div>
-          <Button
-            text="Text"
-            icon={
-              isSorted && sortDirection === "asc" ? (
+        <div style={{ display: "flex" }}>
+          <div className={classes.buttonStyle} onClick={handleSort}>
+            <span>Sort</span>
+            <span>
+              {sortDirection === "asc" ? (
                 <ArrowUpwardIcon />
               ) : (
                 <ArrowDownwardIcon />
-              )
-            }
-            style={{ display: "flex", alignItems: "center" }}
-            buttonWithIcon={true}
-            color="primary"
-            onClick={handleSort}
-          />
-        </div> */}
+              )}
+            </span>
+          </div>
+          <div style={{ width: 200, marginLeft: 20 }}>
+            <Inputbase
+              id="inputbase-text"
+              classname="input-base-class"
+              style={{ width: "100%" }}
+              defaultValue={searchText}
+              placeholder="Enter comment text"
+              handleTextChange={handleTextChange}
+            />
+          </div>
+        </div>
+
         {isLoadingComments && (
           <Loader
             classname={classes.loaderStyle}
@@ -159,11 +169,11 @@ const Comments = ({ classes, title }) => {
           </div>
         )}
         {!isLoadingComments &&
-          comments.length > 0 &&
-          comments.map((item, index) => (
+          filteredCommentsData.length > 0 &&
+          filteredCommentsData.map((item, index) => (
             <DataBox key={`comment-${index}`} data={item} />
           ))}
-        {!isLoadingComments && comments.length === 0 && (
+        {!isLoadingComments && filteredCommentsData.length === 0 && (
           <div className={classes.emptyStyle}>No comments found</div>
         )}
       </div>

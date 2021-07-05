@@ -136,4 +136,18 @@ export const styles = (theme) => ({
       height: 200,
     },
   },
+  emptyStyle: {
+    padding: 30,
+    color: `${theme.palette.primary.main}`,
+    width: "100%",
+  },
+  buttonStyle: {
+    background: `${theme.palette.primary.main}`,
+    width: 100,
+    color: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+  },
 });
