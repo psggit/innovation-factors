@@ -71,7 +71,8 @@ const Groupsets = ({ classes, history, title }) => {
             </div>
           </Paper>
         </Grid>
-        {Object.keys(groupsetsDataObj[dataItem]).map((keyName, keyIndex) => {
+        {groupsetsDataObj.stages.map((item, keyIndex) => {
+          const keyName = item.stageName;
           if (keyName !== "description") {
             return (
               <Grid
