@@ -25,8 +25,8 @@ const Header = ({ classes, currentRoute }) => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
     window.location.reload("/login");
+    localStorage.clear();
   };
 
   return (

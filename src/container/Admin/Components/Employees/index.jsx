@@ -33,7 +33,11 @@ const Employees = ({ classes }) => {
       userId: getQueryParamByName("userId")
         ? getQueryParamByName("userId")
         : JSON.parse(localStorage.getItem("userInfo")).userId,
-      userType: getQueryParamByName("userId") ? "manager" : "admin",
+      userType:
+        getQueryParamByName("userId") ||
+        JSON.parse(localStorage.getItem("userInfo")).userType === "manager"
+          ? "manager"
+          : "admin",
     };
     setIsLoadingList(true);
     setEmployeeList([]);

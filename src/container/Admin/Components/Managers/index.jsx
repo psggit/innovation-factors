@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Employees from "./../Employees";
 
 const managersTableColumns = [
+  { name: "Id", width: 100 },
   { name: "Name", value: (row) => row.firstName, width: 300 },
   { name: "Email", value: (row) => row.email, width: 300 },
   { name: "Gender", value: (row) => row.gender, width: 100 },

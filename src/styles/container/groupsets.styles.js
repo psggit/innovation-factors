@@ -27,4 +27,10 @@ export const styles = (theme) => ({
   fontStyle: {
     textTransform: "capitalize",
   },
+  filterWrapper: {
+    width: 200,
+  },
+  selectStyle: {
+    marginBottom: 30,
+  },
 });

@@ -8,6 +8,12 @@ import Managers from "./Components/Managers";
 import Employees from "./Components/Employees";
 
 const Admin = ({ title, history }) => {
+  const getUserPermission = () => {
+    const USER_ROLE = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo")).userType
+      : "";
+    return USER_ROLE;
+  };
   const tabOptions = [
     {
       name: "Profile",
@@ -25,7 +31,7 @@ const Admin = ({ title, history }) => {
       name: "Managers",
       icon: false,
       component: () => <Managers history={history} activeTab={activeTab} />,
-      hide: false,
+      hide: getUserPermission() === "manager" ? true : false,
     },
     {
       name: "Employees",
