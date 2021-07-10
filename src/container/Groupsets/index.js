@@ -48,15 +48,15 @@ const Groupsets = ({ classes, history, title }) => {
     fetchGroupSetsData();
   }, []);
 
-  const filteredResourceData = useMemo(() => {
-    let filteredResourceList = groupsetsDataObj;
+  const filteredGroupsetsData = useMemo(() => {
+    let filteredGroupsets = groupsetsDataObj;
 
     if (
-      Object.keys(filteredResourceList).length > 0 &&
+      Object.keys(filteredGroupsets).length > 0 &&
       groupIdx.toString() !== "0"
     ) {
       const filteredObj = {};
-      Object.keys(filteredResourceList).filter((key) => {
+      Object.keys(filteredGroupsets).filter((key) => {
         if (
           key ===
             groupsets[groupsets.findIndex((item) => item.id === groupIdx)]
@@ -64,14 +64,14 @@ const Groupsets = ({ classes, history, title }) => {
           key === "stages" ||
           key === "groups"
         ) {
-          filteredObj[key] = filteredResourceList[key];
+          filteredObj[key] = filteredGroupsets[key];
         }
       });
 
-      filteredResourceList = filteredObj;
+      filteredGroupsets = filteredObj;
     }
 
-    return filteredResourceList;
+    return filteredGroupsets;
   }, [groupIdx, groupsetsDataObj]);
 
   const fetchGroupSetsData = () => {
@@ -105,19 +105,27 @@ const Groupsets = ({ classes, history, title }) => {
     setGroupIdx(e.target.value);
   };
 
+  const handleBoxClick = (groupsetId) => {
+    history.push(`/innovation-capacity?groupIdx=${groupsetId}`);
+  };
+
   const FormRow = ({ dataItem }) => {
     const groupData = dataItem.name;
     return (
       <React.Fragment>
         <Grid item xs={2} className={classes.grid}>
-          <Paper className={classes.paper}>
+          <Paper
+            className={classes.paper}
+            onClick={() => handleBoxClick(dataItem.id)}
+            style={{ cursor: "pointer" }}
+          >
             <div className={classes.title}>&#10095; {groupData}</div>
             <div className={classes.subtitle}>
-              {filteredResourceData[groupData]["description"]}
+              {filteredGroupsetsData[groupData]["description"]}
             </div>
           </Paper>
         </Grid>
-        {filteredResourceData.stages.map((item, keyIndex) => {
+        {filteredGroupsetsData.stages.map((item, keyIndex) => {
           const keyName = item.stageName;
           if (keyName !== "description") {
             return (
@@ -127,7 +135,7 @@ const Groupsets = ({ classes, history, title }) => {
                 className={classes.grid}
                 style={{
                   background: `${getColor(
-                    filteredResourceData[groupData][keyName]
+                    filteredGroupsetsData[groupData][keyName]
                   )}`,
                 }}
                 key={`group-row-column-${keyIndex}`}
@@ -136,11 +144,11 @@ const Groupsets = ({ classes, history, title }) => {
                   className={classes.paper}
                   style={{
                     background: `${getColor(
-                      filteredResourceData[groupData][keyName]
+                      filteredGroupsetsData[groupData][keyName]
                     )}`,
                   }}
                 >
-                  {filteredResourceData[groupData][keyName]}
+                  {filteredGroupsetsData[groupData][keyName]}
                 </Paper>
               </Grid>
             );
@@ -157,7 +165,7 @@ const Groupsets = ({ classes, history, title }) => {
           <Paper className={classes.paper}>Select Highlighed groups</Paper>
         </Grid>
 
-        {filteredResourceData.stages.map((item, index) => {
+        {filteredGroupsetsData.stages.map((item, index) => {
           return (
             <Grid
               item
@@ -201,15 +209,15 @@ const Groupsets = ({ classes, history, title }) => {
           />
         )}
         {!isLoadingGroupsets &&
-          Object.keys(filteredResourceData).length === 0 && (
+          Object.keys(filteredGroupsetsData).length === 0 && (
             <div className={classes.emptyStyle}>No groupsets found</div>
           )}
-        {!isLoadingGroupsets && Object.keys(filteredResourceData).length > 0 && (
+        {!isLoadingGroupsets && Object.keys(filteredGroupsetsData).length > 0 && (
           <Grid container>
             <Grid container item>
               <FormColumn />
             </Grid>
-            {filteredResourceData.groups.map((groupData, index) => {
+            {filteredGroupsetsData.groups.map((groupData, index) => {
               if (groupIdx === "0" || groupData.id === groupIdx) {
                 return (
                   <Grid container item key={`group-row-${index}`}>

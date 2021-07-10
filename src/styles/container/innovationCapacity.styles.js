@@ -149,5 +149,17 @@ export const styles = (theme) => ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
+    marginRight: 30,
+  },
+  filterWrapper: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
+  },
+  selectStyle: {
+    width: 300,
+    marginRight: 30,
+    marginBottom: 30,
   },
 });

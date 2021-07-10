@@ -4,10 +4,11 @@ import ReactWordcloud from "react-wordcloud";
 import Layout from "Components/Layout";
 import Notification from "Components/Notification";
 import Loader from "Components/Loader";
-import Inputbase from "./../../components/Inputbase";
+import Select from "Components/Select";
+import Inputbase from "Components/Inputbase";
+import PageTitle from "Components/PageTitle";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import PageTitle from "./../../components/PageTitle";
 import { styles } from "./../../styles/container/innovationCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
 import { fetchComments } from "./../../utils/http";
@@ -26,6 +27,13 @@ const reactCloudOptions = {
 const Comments = ({ classes, title }) => {
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [comments, setComments] = useState([]);
+
+  const [stages, setStages] = useState([]);
+  const [stageIdx, setStageIdx] = useState("0");
+
+  const [groups, setGroups] = useState([]);
+  const [groupIdx, setGroupIdx] = useState("0");
+
   const [wordCloudArray, setWordCloudArray] = useState([]);
   const [errorObject, setErrorObject] = useState({
     open: false,
@@ -40,7 +48,7 @@ const Comments = ({ classes, title }) => {
 
   useEffect(() => {
     getCommentsData();
-  }, []);
+  }, [stageIdx, groupIdx]);
 
   const filteredCommentsData = useMemo(() => {
     let filteredComments = comments;
@@ -64,10 +72,13 @@ const Comments = ({ classes, title }) => {
 
   const getCommentsData = () => {
     setIsLoadingComments(true);
-    fetchComments({ stage: "", type: "" })
+    fetchComments({
+      stageId: stageIdx === "0" ? "" : stageIdx,
+      groupsetId: groupIdx === "0" ? "" : groupIdx,
+    })
       .then((response) => {
-        setComments(response.data);
-        const wordCloudData = response.data.map((item) => {
+        setComments(response.data.displayData);
+        const wordCloudData = response.data.displayData.map((item) => {
           return {
             text: item.commentText,
             value: getRandomInt(100),
@@ -75,6 +86,20 @@ const Comments = ({ classes, title }) => {
         });
         setIsLoadingComments(false);
         setWordCloudArray(wordCloudData);
+
+        const groupsetsData = response.data.groupsets;
+        groupsetsData.unshift({ id: "0", name: "All" });
+
+        setGroups(groupsetsData);
+
+        const stagesData = response.data.stages.map((stage) => {
+          return {
+            id: stage.stageId,
+            name: stage.stageName,
+          };
+        });
+        stagesData.unshift({ id: "0", name: "All" });
+        setStages(stagesData);
       })
       .catch((error) => {
         setIsLoadingComments(false);
@@ -125,6 +150,14 @@ const Comments = ({ classes, title }) => {
     );
   };
 
+  const handleStageChange = (e) => {
+    setStageIdx(e.target.value);
+  };
+
+  const handleGroupChange = (e) => {
+    setGroupIdx(e.target.value);
+  };
+
   return (
     <Layout>
       <PageTitle title={title} />
@@ -140,7 +173,7 @@ const Comments = ({ classes, title }) => {
               )}
             </span>
           </div>
-          <div style={{ width: 200, marginLeft: 20 }}>
+          <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
             <Inputbase
               id="inputbase-text"
               classname="input-base-class"
@@ -148,6 +181,24 @@ const Comments = ({ classes, title }) => {
               defaultValue={searchText}
               placeholder="Enter comment text"
               handleTextChange={handleTextChange}
+            />
+          </div>
+          <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
+            <Select
+              options={stages}
+              labelKey="name"
+              placeholder="Stages"
+              defaultValue={stageIdx}
+              handleSelectChange={handleStageChange}
+            />
+          </div>
+          <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
+            <Select
+              options={groups}
+              labelKey="name"
+              placeholder="Groups"
+              defaultValue={groupIdx}
+              handleSelectChange={handleGroupChange}
             />
           </div>
         </div>

@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Layout from "Components/Layout";
 import PageTitle from "Components/PageTitle";
+import Select from "Components/Select";
 import Loader from "Components/Loader";
 import Notification from "Components/Notification";
 import BarChart from "./components/barchart";
@@ -17,11 +18,25 @@ import HalfDoughnutChart from "./components/HalfDonutChart";
 // import LineChart from "./components/linechart";
 import Button from "./../../components/Button";
 import { fetchDashboard } from "./../../utils/http";
+import { getQueryParamByName } from "./../../utils/helpers";
 
 const InnovationFactor = ({ classes, title, history }) => {
   const [isLoadingInnovationFactor, setIsLoadingInnovationFactor] =
     useState(false);
   const [innovationCapacityData, setInnovationCapacityData] = useState({});
+
+  const [stages, setStages] = useState([]);
+  const [stageIdx, setStageIdx] = useState("0");
+
+  const [groups, setGroups] = useState([]);
+  const [groupIdx, setGroupIdx] = useState(
+    getQueryParamByName("groupIdx") ? getQueryParamByName("groupIdx") : "0"
+  );
+
+  const [defaultFactors, setDefaultFactors] = useState([]);
+  const [factors, setFactors] = useState([]);
+  const [factorIdx, setFactorIdx] = useState("0");
+
   const [barChartData, setBarChartData] = useState({});
   //const [lineChartData, setLineChartData] = useState({});
   const [doughnutData, setDoughnutData] = useState([]);
@@ -39,14 +54,66 @@ const InnovationFactor = ({ classes, title, history }) => {
 
   useEffect(() => {
     fetchInnovationData();
-  }, []);
+  }, [stageIdx, groupIdx, factorIdx]);
+
+  useEffect(() => {
+    if (stages && stages.length > 0 && stageIdx !== "0") getFactors();
+  }, [stageIdx]);
+
+  const getFactors = () => {
+    const factors =
+      stages[stages.findIndex((stage) => stage.id === stageIdx)].factors;
+
+    const modifiedFactors = factors.map((factor) => {
+      return {
+        id: factor.factorId,
+        name: factor.factorName,
+      };
+    });
+    modifiedFactors.unshift({ id: "0", name: "All" });
+
+    setFactors(modifiedFactors);
+  };
 
   const fetchInnovationData = () => {
     setIsLoadingInnovationFactor(true);
-    fetchDashboard({})
+    fetchDashboard({
+      stageId: stageIdx !== "0" ? stageIdx : "",
+      factorId: factorIdx !== "0" ? factorIdx : "",
+      groupsetId: groupIdx !== "0" ? groupIdx : "",
+    })
       .then((response) => {
         setIsLoadingInnovationFactor(false);
-        processResponse(response.data);
+        processResponse(response.data.displayData);
+
+        const groupsetsData = response.data.groupsets;
+        groupsetsData.unshift({ id: "0", name: "All" });
+
+        setGroups(groupsetsData);
+
+        const stagesData = response.data.stages.map((stage) => {
+          return {
+            id: stage.stageId,
+            name: stage.stageName,
+            factors: stage.factors,
+          };
+        });
+        stagesData.unshift({ id: "0", name: "All" });
+        setStages(stagesData);
+
+        let factorsArray = [];
+        const factorsData = response.data.stages.map((stage) => {
+          return stage.factors.map((factor) => {
+            const factorObj = {
+              id: factor.factorId,
+              name: factor.factorName,
+            };
+            factorsArray = [...factorsArray, factorObj];
+            return "";
+          });
+        });
+        factorsArray.unshift({ id: "0", name: "All" });
+        setDefaultFactors(factorsArray);
       })
       .catch((error) => {
         setIsLoadingInnovationFactor(false);
@@ -162,9 +229,50 @@ const InnovationFactor = ({ classes, title, history }) => {
     );
   };
 
+  const handleStageChange = (e) => {
+    setStageIdx(e.target.value);
+  };
+
+  const handleGroupChange = (e) => {
+    setGroupIdx(e.target.value);
+  };
+
+  const handleFactorChange = (e) => {
+    setFactorIdx(e.target.value);
+  };
+
   return (
     <Layout>
       <PageTitle title={title} />
+      <div className={classes.filterWrapper}>
+        <div className={classes.selectStyle}>
+          <Select
+            options={groups}
+            labelKey="name"
+            placeholder="Groups"
+            defaultValue={groupIdx}
+            handleSelectChange={handleGroupChange}
+          />
+        </div>
+        <div className={classes.selectStyle}>
+          <Select
+            options={stages}
+            labelKey="name"
+            placeholder="Stages"
+            defaultValue={stageIdx}
+            handleSelectChange={handleStageChange}
+          />
+        </div>
+        <div className={classes.selectStyle}>
+          <Select
+            options={stageIdx !== "0" ? factors : defaultFactors}
+            labelKey="name"
+            placeholder="Factors"
+            defaultValue={factorIdx}
+            handleSelectChange={handleFactorChange}
+          />
+        </div>
+      </div>
       {isLoadingInnovationFactor && (
         <Loader
           classname={classes.loaderStyle}
@@ -232,46 +340,61 @@ const InnovationFactor = ({ classes, title, history }) => {
                 />
               </div> */}
             </div>
-            <div className={classes.contentWrapper}>
-              <div className={classes.headerWrapper}>
-                <span className={classes.header}>Spotlight </span>
-                <span className={classes.subnote}>
-                  on the highest and lowest scores
-                </span>
+            {(Object.keys(innovationCapacityData.strengths).length > 0 ||
+              Object.keys(innovationCapacityData.weakness).length > 0) && (
+              <>
+                <div className={classes.headerWrapper}>
+                  <span className={classes.header}>Spotlight </span>
+                  <span className={classes.subnote}>
+                    on the highest and lowest scores
+                  </span>
+                </div>
+                <div className={classes.subheader}>
+                  <p>Here are your strongest areas:</p>
+                </div>
+              </>
+            )}
+            {Object.keys(innovationCapacityData.strengths).length > 0 && (
+              <div className={classes.contentWrapper}>
+                {Object.keys(innovationCapacityData.strengths).map(
+                  (keyName, index) => {
+                    return (
+                      <div
+                        style={{ marginBottom: 20 }}
+                        key={`strengths${index}`}
+                      >
+                        <p className={classes.subtitle}>{keyName}</p>
+                        <DataBox
+                          data={innovationCapacityData.strengths[keyName]}
+                        />
+                      </div>
+                    );
+                  }
+                )}
               </div>
-              <div className={classes.subheader}>
-                <p>Here are your strongest areas:</p>
+            )}
+            {Object.keys(innovationCapacityData.weakness).length > 0 && (
+              <div className={classes.contentWrapper}>
+                <div className={classes.subheader}>
+                  <p>To improve your innovation capacity focus on these:</p>
+                </div>
+                {Object.keys(innovationCapacityData.weakness).map(
+                  (keyName, index) => {
+                    return (
+                      <div
+                        style={{ marginBottom: 20 }}
+                        key={`weakness${index}`}
+                      >
+                        <p className={classes.subtitle}>{keyName}</p>
+                        <DataBox
+                          data={innovationCapacityData.weakness[keyName]}
+                        />
+                      </div>
+                    );
+                  }
+                )}
               </div>
-              {Object.keys(innovationCapacityData.strengths).map(
-                (keyName, index) => {
-                  return (
-                    <div style={{ marginBottom: 20 }} key={`strengths${index}`}>
-                      <p className={classes.subtitle}>{keyName}</p>
-                      <DataBox
-                        data={innovationCapacityData.strengths[keyName]}
-                      />
-                    </div>
-                  );
-                }
-              )}
-            </div>
-            <div className={classes.contentWrapper}>
-              <div className={classes.subheader}>
-                <p>To improve your innovation capacity focus on these:</p>
-              </div>
-              {Object.keys(innovationCapacityData.weakness).map(
-                (keyName, index) => {
-                  return (
-                    <div style={{ marginBottom: 20 }} key={`weakness${index}`}>
-                      <p className={classes.subtitle}>{keyName}</p>
-                      <DataBox
-                        data={innovationCapacityData.weakness[keyName]}
-                      />
-                    </div>
-                  );
-                }
-              )}
-            </div>
+            )}
           </>
         )}
       {errorObject.open && (

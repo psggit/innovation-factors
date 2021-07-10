@@ -85,7 +85,6 @@ const ImprovementResource = ({ classes, title }) => {
 
   const filteredResourceData = useMemo(() => {
     let filteredResourceList = resourceData;
-    console.log("content", contentTypeIdx);
     if (stage.toString() === "0" && contentTypeIdx.toString() === "0") {
       filteredResourceList = resourceData;
     }
