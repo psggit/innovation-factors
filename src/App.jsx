@@ -39,42 +39,48 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router history={history}>
-        {isLoggedIn && <Header currentRoute={currentRoute} />}
-        <Route exact path="/login" render={() => <Login history={history} />} />
-        <Route
-          exact
-          path="/innovation-capacity"
-          render={() => (
-            <InnovationFactor history={history} title={currentRoute} />
-          )}
-        />
-        <Route
-          exact
-          path="/groupsets"
-          render={() => <Groupsets history={history} title={currentRoute} />}
-        />
-        <Route
-          exact
-          path="/improvement-resources"
-          render={() => (
-            <ImprovementResource history={history} title={currentRoute} />
-          )}
-        />
-        <Route
-          exact
-          path="/stages"
-          render={() => <Stages history={history} title={currentRoute} />}
-        />
-        <Route
-          exact
-          path="/comments"
-          render={() => <Comments history={history} title={currentRoute} />}
-        />
-        <Route
-          exact
-          path="/admin"
-          render={() => <Admin history={history} title={currentRoute} />}
-        />
+        <div style={{ display: "flex" }}>
+          {isLoggedIn && <Header currentRoute={currentRoute} />}
+          <Route
+            exact
+            path="/login"
+            render={() => <Login history={history} />}
+          />
+          <Route
+            exact
+            path="/innovation-capacity"
+            render={() => (
+              <InnovationFactor history={history} title={currentRoute} />
+            )}
+          />
+          <Route
+            exact
+            path="/groupsets"
+            render={() => <Groupsets history={history} title={currentRoute} />}
+          />
+          <Route
+            exact
+            path="/improvement-resources"
+            render={() => (
+              <ImprovementResource history={history} title={currentRoute} />
+            )}
+          />
+          <Route
+            exact
+            path="/stages"
+            render={() => <Stages history={history} title={currentRoute} />}
+          />
+          <Route
+            exact
+            path="/comments"
+            render={() => <Comments history={history} title={currentRoute} />}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={() => <Admin history={history} title={currentRoute} />}
+          />
+        </div>
       </Router>
     </ThemeProvider>
   );
