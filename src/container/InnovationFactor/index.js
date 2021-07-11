@@ -150,9 +150,10 @@ const InnovationFactor = ({ classes, title, history }) => {
 
     const doughnutData = [
       data.dashboard.detractor,
-      data.dashboard.promoter,
+      data.dashboard.promotor,
       data.dashboard.passive,
     ];
+    console.log("doughnutData1313", doughnutData)
     setDoughnutData(doughnutData);
 
     const halfDoughnutData = [
@@ -313,19 +314,19 @@ const InnovationFactor = ({ classes, title, history }) => {
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.promotor}%
+                        {innovationCapacityData.dashboard.promotor?.toFixed(2)}%
                       </p>
                       <p className={classes.label}>Promoter</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.passive}%
+                        {innovationCapacityData.dashboard.passive?.toFixed(2)}%
                       </p>
                       <p className={classes.label}>Passive</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.detractor}%
+                        {innovationCapacityData.dashboard.detractor?.toFixed(2)}%
                       </p>
                       <p className={classes.label}>Detractor</p>
                     </div>
