@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from "react";
-import Layout from "./../../components/Layout";
-import Notification from "./../../components/Notification";
+import Layout from "Components/Layout";
+import Notification from "Components/Notification";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
-import PageTitle from "./../../components/PageTitle";
-import Button from "./../../components/Button";
-import Loader from "./../../components/Loader";
+import PageTitle from "Components/PageTitle";
+import Button from "Components/Button";
+import Loader from "Components/Loader";
 import Select from "Components/Select";
 import clsx from "clsx";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -21,6 +22,8 @@ const Stages = ({ classes, history, title }) => {
 
   const [groupsetIdx, setGroupsetIdx] = useState("0");
   const [groupsetData, setGroupsetData] = useState([]);
+
+  const [selectedFactorId, setSelectedFactorId] = useState("");
 
   const [errorObject, setErrorObject] = useState({
     open: false,
@@ -72,6 +75,10 @@ const Stages = ({ classes, history, title }) => {
       });
   }, [groupsetIdx]);
 
+  const handleFactorClick = (item) => {
+    setSelectedFactorId(item.factorId);
+  };
+
   const DataBox = (props) => {
     return (
       <Card style={{ marginBottom: 20 }}>
@@ -106,13 +113,19 @@ const Stages = ({ classes, history, title }) => {
                     <div key={`factor${index}`}>
                       <div className={classes.factorDataWrapper}>
                         <div className={classes.factorData}>
-                          <div>{item.name}</div>
+                          <div className={classes.factorStyle}>{item.name}</div>
                           <div>{item.score}</div>
-                          <Button text="Factor Fix" color="primary" />
+                          <Button
+                            text="Factor Fix"
+                            color="primary"
+                            onClick={() => handleFactorClick(item)}
+                          />
                         </div>
-                        <p className={classes.factorDataDesc}>
-                          {item.factorFixText}
-                        </p>
+                        {selectedFactorId === item.factorId && (
+                          <p className={classes.factorDataDesc}>
+                            {item.factorFixText}
+                          </p>
+                        )}
                       </div>
                     </div>
                   );

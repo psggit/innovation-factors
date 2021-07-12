@@ -6,10 +6,6 @@ import CommentsIcon from "Images/comments.png";
 import GroupsetsIcon from "Images/groupsets.png";
 import AdminIcon from "Images/admin.png";
 
-const userType = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo")).userType
-  : null;
-
 const imageStyle = {
   width: 30,
   height: 30,

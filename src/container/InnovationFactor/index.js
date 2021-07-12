@@ -36,6 +36,7 @@ const InnovationFactor = ({ classes, title, history }) => {
   const [defaultFactors, setDefaultFactors] = useState([]);
   const [factors, setFactors] = useState([]);
   const [factorIdx, setFactorIdx] = useState("0");
+  const [selectedFactorId, setSelectedFactorId] = useState("");
 
   const [barChartData, setBarChartData] = useState({});
   //const [lineChartData, setLineChartData] = useState({});
@@ -153,7 +154,7 @@ const InnovationFactor = ({ classes, title, history }) => {
       data.dashboard.promotor,
       data.dashboard.passive,
     ];
-    console.log("doughnutData1313", doughnutData)
+    console.log("doughnutData1313", doughnutData);
     setDoughnutData(doughnutData);
 
     const halfDoughnutData = [
@@ -211,13 +212,19 @@ const InnovationFactor = ({ classes, title, history }) => {
                     <div key={`factor${index}`}>
                       <div className={classes.factorDataWrapper}>
                         <div className={classes.factorData}>
-                          <div>{item.name}</div>
+                          <div className={classes.factorStyle}>{item.name}</div>
                           <div>{item.score}</div>
-                          <Button text="Factor Fix" color="primary" />
+                          <Button
+                            text="Factor Fix"
+                            color="primary"
+                            onClick={() => handleFactorClick(item)}
+                          />
                         </div>
-                        <p className={classes.factorDataDesc}>
-                          {item.factorFixText}
-                        </p>
+                        {selectedFactorId === item.factorId && (
+                          <p className={classes.factorDataDesc}>
+                            {item.factorFixText}
+                          </p>
+                        )}
                       </div>
                     </div>
                   );
@@ -240,6 +247,11 @@ const InnovationFactor = ({ classes, title, history }) => {
 
   const handleFactorChange = (e) => {
     setFactorIdx(e.target.value);
+  };
+
+  const handleFactorClick = (item) => {
+    console.log("factr", item);
+    setSelectedFactorId(item.factorId);
   };
 
   return (
@@ -326,7 +338,8 @@ const InnovationFactor = ({ classes, title, history }) => {
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.detractor?.toFixed(2)}%
+                        {innovationCapacityData.dashboard.detractor?.toFixed(2)}
+                        %
                       </p>
                       <p className={classes.label}>Detractor</p>
                     </div>

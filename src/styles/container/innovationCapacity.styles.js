@@ -106,6 +106,9 @@ export const styles = (theme) => ({
     padding: "20px 0px 0 0px",
     alignItems: "center",
   },
+  factorStyle: {
+    width: 200,
+  },
   titleWrapper: {
     display: "flex",
     alignItems: "center",
