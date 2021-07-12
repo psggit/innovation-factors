@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Layout from "./../../components/Layout";
 import Notification from "./../../components/Notification";
 import Card from "@material-ui/core/Card";
@@ -7,6 +7,7 @@ import Collapse from "@material-ui/core/Collapse";
 import PageTitle from "./../../components/PageTitle";
 import Button from "./../../components/Button";
 import Loader from "./../../components/Loader";
+import Select from "Components/Select";
 import clsx from "clsx";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { fetchStages } from "./../../utils/http";
@@ -17,6 +18,9 @@ const Stages = ({ classes, history, title }) => {
   const [stages, setStages] = useState([]);
   const [isLoadingStages, setIsLoadingStages] = useState(false);
   const [showDetails, setShowDetails] = useState("");
+
+  const [groupsetIdx, setGroupsetIdx] = useState("0");
+  const [groupsetData, setGroupsetData] = useState([]);
 
   const [errorObject, setErrorObject] = useState({
     open: false,
@@ -29,7 +33,7 @@ const Stages = ({ classes, history, title }) => {
 
   useEffect(() => {
     getStagesData();
-  }, []);
+  }, [groupsetIdx]);
 
   const handleShowFactorDetails = (data) => {
     if (!showDetails) setShowDetails(data.stageId);
@@ -42,11 +46,20 @@ const Stages = ({ classes, history, title }) => {
     history.push(`/improvement-resources?stageId=${stageId}`);
   };
 
-  const getStagesData = () => {
+  const handleGroupChange = (e) => {
+    setGroupsetIdx(e.target.value);
+  };
+
+  const getStagesData = useCallback(() => {
     setIsLoadingStages(true);
-    fetchStages({ stage: "", type: "" })
+    fetchStages({ groupsetId: groupsetIdx === "0" ? "" : groupsetIdx })
       .then((response) => {
         setStages(response.data.stages);
+
+        const groupsetsData = response.data.groupsets;
+        groupsetsData.unshift({ id: "0", name: "All" });
+
+        setGroupsetData(groupsetsData);
         setIsLoadingStages(false);
       })
       .catch((error) => {
@@ -57,7 +70,7 @@ const Stages = ({ classes, history, title }) => {
         });
         console.log("Error in fetching stages", error);
       });
-  };
+  }, [groupsetIdx]);
 
   const DataBox = (props) => {
     return (
@@ -115,6 +128,15 @@ const Stages = ({ classes, history, title }) => {
   return (
     <Layout>
       <PageTitle title={title} />
+      <div className={classes.selectStyle}>
+        <Select
+          options={groupsetData}
+          labelKey="name"
+          placeholder="Groups"
+          defaultValue={groupsetIdx}
+          handleSelectChange={handleGroupChange}
+        />
+      </div>
       <div>
         {isLoadingStages && (
           <Loader
