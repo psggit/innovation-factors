@@ -29,7 +29,7 @@ const DrawerComponent = (props) => {
           onMouseOver={() => toggleMenu(true)}
           onMouseOut={() => toggleMenu(false)}
           variant="temporary"
-          open={drawerState}
+          open={true}
           classes={{
             root: classes.root,
             paper: classes.drawer,
@@ -42,6 +42,7 @@ const DrawerComponent = (props) => {
         <Drawer
           onMouseOver={() => toggleMenu(true)}
           onMouseOut={() => toggleMenu(false)}
+          open={true}
           variant="permanent"
           className={clsx(classes.drawer, {
             [classes.drawerOpen]: drawerState,
@@ -69,7 +70,7 @@ DrawerComponent.propTypes = {
   toggleMenu: PropTypes.func,
 };
 
-const drawerWidth = 256;
+const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: "2 !important",

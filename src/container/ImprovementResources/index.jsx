@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { styles } from "./../../styles/container/improvementCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
-import Layout from "./../../components/Layout";
-import Loader from "./../../components/Loader";
+import Layout from "Components/Layout";
+import Loader from "Components/Loader";
+import InputLabel from "Components/InputLabel";
 import Notification from "Components/Notification";
 import Inputbase from "./../../components/Inputbase";
 import PageTitle from "./../../components/PageTitle";
@@ -124,6 +125,7 @@ const ImprovementResource = ({ classes, title }) => {
       <div className={classes.improvementResWrapper}>
         <div className={classes.filterWrapper}>
           <div className={classes.selectStyle}>
+            <InputLabel classname={classes.inputLabelStyle}>Stage</InputLabel>
             <Select
               options={stageOptions}
               labelKey="name"
@@ -133,6 +135,9 @@ const ImprovementResource = ({ classes, title }) => {
             />
           </div>
           <div className={classes.selectStyle}>
+            <InputLabel classname={classes.inputLabelStyle}>
+              Content Type
+            </InputLabel>
             <Select
               options={contentTypeOptions}
               labelKey="displayName"
@@ -142,12 +147,13 @@ const ImprovementResource = ({ classes, title }) => {
             />
           </div>
           <div className={classes.selectStyle}>
+            <InputLabel classname={classes.inputLabelStyle}></InputLabel>
             <Inputbase
               id="inputbase-text"
               classname="input-base-class"
               style={{ width: "100%" }}
               defaultValue={searchText}
-              placeholder="Enter title"
+              placeholder="Search by title"
               handleTextChange={handleTextChange}
             />
           </div>
@@ -196,7 +202,7 @@ const ImprovementResource = ({ classes, title }) => {
                   </div>
                   <div className={classes.row3}>
                     <p className={classes.note}>Title: {item.title}</p>
-                    <p className={classes.note}>Soure: {item.source}</p>
+                    <p className={classes.note}>Source: {item.source}</p>
                   </div>
                 </div>
               );

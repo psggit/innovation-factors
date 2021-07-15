@@ -6,6 +6,7 @@ import Notification from "Components/Notification";
 import Loader from "Components/Loader";
 import Select from "Components/Select";
 import Inputbase from "Components/Inputbase";
+import InputLabel from "Components/InputLabel";
 import PageTitle from "Components/PageTitle";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -15,7 +16,7 @@ import { fetchComments } from "./../../utils/http";
 import { getRandomInt } from "./../../utils/helpers";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
-import { orderBy } from "lodash";
+import { orderBy, sortBy } from "lodash";
 
 const reactCloudOptions = {
   enableTooltip: false,
@@ -61,7 +62,11 @@ const Comments = ({ classes, title }) => {
       });
     }
 
-    filteredComments = orderBy(filteredComments, ["score"], [sortDirection]);
+    if (sortDirection === "desc") {
+      filteredComments = sortBy(filteredComments, "score").reverse();
+    } else {
+      filteredComments = sortBy(filteredComments, "score");
+    }
 
     return filteredComments;
   }, [searchText, sortDirection, comments]);
@@ -77,7 +82,14 @@ const Comments = ({ classes, title }) => {
       groupsetId: groupIdx === "0" ? "" : groupIdx,
     })
       .then((response) => {
-        setComments(response.data.displayData);
+        setComments(
+          response.data.displayData.map((comment) => {
+            return {
+              ...comment,
+              score: parseInt(comment.score),
+            };
+          })
+        );
         const wordCloudData = response.data.displayData.map((item) => {
           return {
             text: item.commentText,
@@ -162,28 +174,21 @@ const Comments = ({ classes, title }) => {
     <Layout>
       <PageTitle title={title} />
       <div>
-        <div style={{ display: "flex" }}>
-          <div className={classes.buttonStyle} onClick={handleSort}>
-            <span>Sort</span>
-            <span>
-              {sortDirection === "asc" ? (
-                <ArrowUpwardIcon />
-              ) : (
-                <ArrowDownwardIcon />
-              )}
-            </span>
-          </div>
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
           <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
-            <Inputbase
-              id="inputbase-text"
-              classname="input-base-class"
-              style={{ width: "100%" }}
-              defaultValue={searchText}
-              placeholder="Enter comment text"
-              handleTextChange={handleTextChange}
+            <InputLabel classname={classes.inputLabelStyle}>
+              Groupset
+            </InputLabel>
+            <Select
+              options={groups}
+              labelKey="name"
+              placeholder="Groups"
+              defaultValue={groupIdx}
+              handleSelectChange={handleGroupChange}
             />
           </div>
           <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
+            <InputLabel classname={classes.inputLabelStyle}>Stage</InputLabel>
             <Select
               options={stages}
               labelKey="name"
@@ -193,13 +198,28 @@ const Comments = ({ classes, title }) => {
             />
           </div>
           <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
-            <Select
-              options={groups}
-              labelKey="name"
-              placeholder="Groups"
-              defaultValue={groupIdx}
-              handleSelectChange={handleGroupChange}
+            <Inputbase
+              id="inputbase-text"
+              classname="input-base-class"
+              style={{ width: "100%" }}
+              defaultValue={searchText}
+              placeholder="Search by comment text"
+              handleTextChange={handleTextChange}
             />
+          </div>
+          <div
+            className={classes.buttonStyle}
+            style={{ height: 36 }}
+            onClick={handleSort}
+          >
+            <span>Sort</span>
+            <span>
+              {sortDirection === "asc" ? (
+                <ArrowUpwardIcon />
+              ) : (
+                <ArrowDownwardIcon />
+              )}
+            </span>
           </div>
         </div>
 

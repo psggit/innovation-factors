@@ -11,6 +11,7 @@ import Layout from "Components/Layout";
 import PageTitle from "Components/PageTitle";
 import Select from "Components/Select";
 import Loader from "Components/Loader";
+import InputLabel from "Components/InputLabel";
 import Notification from "Components/Notification";
 import BarChart from "./components/barchart";
 import DoughnutChart from "./components/doughnutChart";
@@ -184,7 +185,9 @@ const InnovationFactor = ({ classes, title, history }) => {
         <div className={classes.databox}>
           <div className={classes.part1}>
             <div className={classes.textStyle}>{props.data.name}</div>
-            <div className={classes.textStyle}>{props.data.score}</div>
+            <div className={classes.textStyle}>
+              {props.data.score ? parseFloat(props.data.score).toFixed(1) : ""}
+            </div>
             <Button
               text="Improvement Resources"
               color="primary"
@@ -192,14 +195,12 @@ const InnovationFactor = ({ classes, title, history }) => {
             />
           </div>
           <div className={classes.part2}>
-            <div className={clsx(classes.titleWrapper)}>
+            <div
+              className={clsx(classes.titleWrapper)}
+              onClick={() => handleShowFactorDetails(props.data)}
+            >
               <ArrowDropDownIcon />
-              <p
-                className={classes.textBorder}
-                onClick={() => handleShowFactorDetails(props.data)}
-              >
-                Innovation Factors
-              </p>
+              <p className={classes.textBorder}>Innovation Factors</p>
             </div>
             <Collapse
               in={showDetails === props.data.id}
@@ -250,7 +251,6 @@ const InnovationFactor = ({ classes, title, history }) => {
   };
 
   const handleFactorClick = (item) => {
-    console.log("factr", item);
     setSelectedFactorId(item.factorId);
   };
 
@@ -259,6 +259,7 @@ const InnovationFactor = ({ classes, title, history }) => {
       <PageTitle title={title} />
       <div className={classes.filterWrapper}>
         <div className={classes.selectStyle}>
+          <InputLabel classname={classes.inputLabelStyle}>Groupset</InputLabel>
           <Select
             options={groups}
             labelKey="name"
@@ -268,6 +269,7 @@ const InnovationFactor = ({ classes, title, history }) => {
           />
         </div>
         <div className={classes.selectStyle}>
+          <InputLabel classname={classes.inputLabelStyle}>Stage</InputLabel>
           <Select
             options={stages}
             labelKey="name"
@@ -277,6 +279,7 @@ const InnovationFactor = ({ classes, title, history }) => {
           />
         </div>
         <div className={classes.selectStyle}>
+          <InputLabel classname={classes.inputLabelStyle}>Factor</InputLabel>
           <Select
             options={stageIdx !== "0" ? factors : defaultFactors}
             labelKey="name"
@@ -326,19 +329,19 @@ const InnovationFactor = ({ classes, title, history }) => {
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.promotor?.toFixed(2)}%
+                        {innovationCapacityData.dashboard.promotor?.toFixed(1)}%
                       </p>
                       <p className={classes.label}>Promoter</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.passive?.toFixed(2)}%
+                        {innovationCapacityData.dashboard.passive?.toFixed(1)}%
                       </p>
                       <p className={classes.label}>Passive</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.detractor?.toFixed(2)}
+                        {innovationCapacityData.dashboard.detractor?.toFixed(1)}
                         %
                       </p>
                       <p className={classes.label}>Detractor</p>

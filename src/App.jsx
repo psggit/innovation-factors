@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "Components/Header";
 import { Router } from "react-router";
@@ -17,13 +17,14 @@ import { theme } from "./Theme";
 const history = createHistory();
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo")).isLoggedIn
+      : false
+  );
   const [currentRoute, setCurrentRoute] = React.useState(
     window.location.pathname.split("/")[1] || "/"
   );
-
-  const isLoggedIn = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")).isLoggedIn
-    : null;
 
   useEffect(() => {
     history.listen((location) => {
@@ -32,54 +33,78 @@ function App() {
           ? location.pathname.split("/")[1]
           : "/";
       setCurrentRoute(newRoute);
+      setIsLoggedIn(
+        localStorage.getItem("userInfo")
+          ? JSON.parse(localStorage.getItem("userInfo")).isLoggedIn
+          : false
+      );
     });
     if (!isLoggedIn) history.push("/login");
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <ThemeProvider theme={theme}>
       <Router history={history}>
         <div style={{ display: "flex" }}>
           {isLoggedIn && <Header currentRoute={currentRoute} />}
-          <Route
-            exact
-            path="/login"
-            render={() => <Login history={history} />}
-          />
-          <Route
-            exact
-            path="/innovation-capacity"
-            render={() => (
-              <InnovationFactor history={history} title={currentRoute} />
+          {!isLoggedIn && (
+            <Route
+              exact
+              path="/login"
+              render={() => <Login history={history} />}
+            />
+          )}
+          <div>
+            {isLoggedIn && (
+              <React.Fragment>
+                <Route
+                  exact
+                  path="/innovation-capacity"
+                  render={() => (
+                    <InnovationFactor history={history} title={currentRoute} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/groupsets"
+                  render={() => (
+                    <Groupsets history={history} title={currentRoute} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/improvement-resources"
+                  render={() => (
+                    <ImprovementResource
+                      history={history}
+                      title={currentRoute}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/stages"
+                  render={() => (
+                    <Stages history={history} title={currentRoute} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/comments"
+                  render={() => (
+                    <Comments history={history} title={currentRoute} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/admin"
+                  render={() => (
+                    <Admin history={history} title={currentRoute} />
+                  )}
+                />
+              </React.Fragment>
             )}
-          />
-          <Route
-            exact
-            path="/groupsets"
-            render={() => <Groupsets history={history} title={currentRoute} />}
-          />
-          <Route
-            exact
-            path="/improvement-resources"
-            render={() => (
-              <ImprovementResource history={history} title={currentRoute} />
-            )}
-          />
-          <Route
-            exact
-            path="/stages"
-            render={() => <Stages history={history} title={currentRoute} />}
-          />
-          <Route
-            exact
-            path="/comments"
-            render={() => <Comments history={history} title={currentRoute} />}
-          />
-          <Route
-            exact
-            path="/admin"
-            render={() => <Admin history={history} title={currentRoute} />}
-          />
+          </div>
         </div>
       </Router>
     </ThemeProvider>

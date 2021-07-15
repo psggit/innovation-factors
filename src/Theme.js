@@ -5,5 +5,9 @@ export const theme = createMuiTheme({
     primary: {
       main: "#3d7ebc",
     },
+    background: {
+      hover: "#0c77be",
+      disabled: "#aeaeb7",
+    },
   },
 });

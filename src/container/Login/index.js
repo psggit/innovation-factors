@@ -37,7 +37,7 @@ const Login = ({ history }) => {
       .catch((error) => {
         setErrorObject({
           open: true,
-          message: error.message,
+          message: error.errorMessage,
         });
         console.log("Error in logging in", error);
       });

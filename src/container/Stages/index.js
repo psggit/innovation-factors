@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from "react";
 import Layout from "Components/Layout";
+import InputLabel from "Components/InputLabel";
 import Notification from "Components/Notification";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -142,6 +143,7 @@ const Stages = ({ classes, history, title }) => {
     <Layout>
       <PageTitle title={title} />
       <div className={classes.selectStyle}>
+        <InputLabel classname={classes.inputLabelStyle}>Groupset</InputLabel>
         <Select
           options={groupsetData}
           labelKey="name"
