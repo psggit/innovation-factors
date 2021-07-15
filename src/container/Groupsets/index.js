@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { styles } from "../../styles/container/groupsets.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Layout from "Components/Layout";
+import InputLabel from "Components/InputLabel";
 import Loader from "Components/Loader";
 import Select from "Components/Select";
 import Notification from "Components/Notification";
@@ -148,7 +149,9 @@ const Groupsets = ({ classes, history, title }) => {
                     )}`,
                   }}
                 >
-                  {filteredGroupsetsData[groupData][keyName]}
+                  {parseFloat(
+                    filteredGroupsetsData[groupData][keyName]
+                  ).toFixed(1)}
                 </Paper>
               </Grid>
             );
@@ -162,7 +165,7 @@ const Groupsets = ({ classes, history, title }) => {
     return (
       <React.Fragment>
         <Grid item xs={2} className={classes.grid}>
-          <Paper className={classes.paper}>Select Highlighed groups</Paper>
+          {/* <Paper className={classes.paper}>Select Highlighed groups</Paper> */}
         </Grid>
 
         {filteredGroupsetsData.stages.map((item, index) => {
@@ -190,6 +193,9 @@ const Groupsets = ({ classes, history, title }) => {
 
         <div className={classes.filterWrapper}>
           <div className={classes.selectStyle}>
+            <InputLabel classname={classes.inputLabelStyle}>
+              Groupset
+            </InputLabel>
             <Select
               options={groupsets}
               labelKey="name"

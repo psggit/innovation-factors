@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { startCase, camelCase } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   fontStyle: {
@@ -13,7 +14,13 @@ const useStyles = makeStyles((theme) => ({
 
 const PageTitle = ({ title }) => {
   const classes = useStyles();
-  return <div className={classes.fontStyle}>{title}</div>;
+  return (
+    <div className={classes.fontStyle}>
+      {title.includes("-")
+        ? `${title.split("-")[0]} ${startCase(camelCase(title.split("-")[1]))}`
+        : title}
+    </div>
+  );
 };
 
 export default PageTitle;

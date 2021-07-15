@@ -4,9 +4,13 @@ export const styles = (theme) => ({
   },
   filterWrapper: {
     display: "flex",
+    alignItems: "flex-end",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
     },
+  },
+  inputLabelStyle: {
+    marginBottom: 10,
   },
   selectStyle: {
     width: 300,

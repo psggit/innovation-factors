@@ -33,4 +33,7 @@ export const styles = (theme) => ({
   selectStyle: {
     marginBottom: 30,
   },
+  inputLabelStyle: {
+    marginBottom: 10,
+  },
 });

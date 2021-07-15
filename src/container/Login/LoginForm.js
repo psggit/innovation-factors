@@ -83,6 +83,7 @@ function LoginForm({ classes, onSubmit }) {
             disabled={!(formik.isValid && formik.dirty)}
             className={classes.loginButton}
             onClick={formik.handleSubmit}
+            color="primary"
           />
         </div>
       </form>

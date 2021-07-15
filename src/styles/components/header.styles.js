@@ -9,7 +9,7 @@ export const styles = (theme) => ({
     left: 0,
     right: 0,
     top: 0,
-    borderBottom: `5px solid ${theme.palette.primary.main}`,
+    borderBottom: `3px solid ${theme.palette.primary.main}`,
     backgroundColor: "#fff",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",

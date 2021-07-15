@@ -68,13 +68,13 @@ export const styles = (theme) => ({
   },
   header: {
     textTransform: "captialize",
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 600,
     color: `${theme.palette.primary.main}`,
   },
   subnote: {
     textTransform: "uppercase",
-    fontSize: 12,
+    fontSize: 18,
     color: `${theme.palette.primary.main}`,
   },
   subheader: {
@@ -83,6 +83,9 @@ export const styles = (theme) => ({
   databox: {
     border: "1px solid #ccbcbc",
     padding: 20,
+  },
+  inputLabelStyle: {
+    marginBottom: 10,
   },
   part1: {
     display: "flex",

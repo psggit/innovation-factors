@@ -65,6 +65,17 @@ const useStyles = makeStyles((theme) => ({
   buttonPrimary: {
     color: "#FFFFFF",
     backgroundColor: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.background.hover
+        ? theme.palette.background.hover
+        : "red",
+    },
+    "&:disabled": {
+      color: "#FFFFFF",
+      backgroundColor: theme.palette.background.disabled
+        ? theme.palette.background.disabled
+        : "#aeaeb7",
+    },
   },
   button: {
     borderRadius: 0,

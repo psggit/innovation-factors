@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px 104px 64px 104px",
     marginTop: 75,
     width: "inherit",
-    overflow: "scroll",
+    //overflow: "scroll",
     [theme.breakpoints.down("sm")]: {
       padding: "30px 30px 30px 30px",
       marginTop: 107,
