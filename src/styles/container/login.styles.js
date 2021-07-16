@@ -23,6 +23,7 @@ export const styles = (theme) => ({
     color: "#c81922",
     fontSize: "12px",
     paddingTop: "4px",
+    textAlign: "left",
   },
   loginButtonWrapper: {
     display: "flex",
@@ -58,5 +59,10 @@ export const styles = (theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: 200,
     },
+  },
+  forgotPasswordStyle: {
+    color: theme.palette.primary.main,
+    cursor: "pointer",
+    margin: "20px 0",
   },
 });

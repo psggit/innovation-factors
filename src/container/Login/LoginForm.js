@@ -25,7 +25,7 @@ const validationSchema = yup.object().shape({
     ),
 });
 
-function LoginForm({ classes, onSubmit }) {
+function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
   //using useFormik
   const formik = useFormik({
     initialValues,
@@ -80,12 +80,18 @@ function LoginForm({ classes, onSubmit }) {
         <div className={classes.loginButtonWrapper}>
           <Button
             text="Login"
-            disabled={!(formik.isValid && formik.dirty)}
+            disabled={!(formik.isValid && formik.dirty) || isLoggingIn}
             className={classes.loginButton}
             onClick={formik.handleSubmit}
             color="primary"
           />
         </div>
+        <p
+          className={classes.forgotPasswordStyle}
+          onClick={handleForgotPassword}
+        >
+          Forgot Password?
+        </p>
       </form>
     </div>
   );

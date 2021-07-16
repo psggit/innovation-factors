@@ -77,6 +77,52 @@ const useStyles = makeStyles((theme) => ({
         : "#aeaeb7",
     },
   },
+  buttonSecondary: {
+    color: theme.palette.background.active
+      ? theme.palette.background.active
+      : "#005e9d",
+    backgroundColor: "#FFFFFF",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: theme.palette.background.active
+      ? theme.palette.background.active
+      : "#005e9d",
+    "&:hover": {
+      backgroundColor: theme.palette.background.outlineHover
+        ? theme.palette.background.outlineHover
+        : "#e5f0f8",
+      color: theme.palette.background.hover
+        ? theme.palette.background.hover
+        : "#0c77be",
+      borderWidth: "1px",
+      borderStyle: "solid",
+      borderColor: theme.palette.background.hover
+        ? theme.palette.background.hover
+        : "#0c77be",
+    },
+    "&:active": {
+      backgroundColor: "#FFFFFF",
+      color: theme.palette.background.selected
+        ? theme.palette.background.selected
+        : "#00437f",
+      borderWidth: "1px",
+      borderStyle: "solid",
+      borderColor: theme.palette.background.selected
+        ? theme.palette.background.selected
+        : "#00437f",
+    },
+    "&:disabled": {
+      color: theme.palette.background.disabled
+        ? theme.palette.background.disabled
+        : "#aeaeb7",
+      borderWidth: "1px",
+      backgroundColor: "#FFFFFF",
+      borderStyle: "solid",
+      borderColor: theme.palette.background.disabled
+        ? theme.palette.background.disabled
+        : "#aeaeb7",
+    },
+  },
   button: {
     borderRadius: 0,
     verticalAlign: "none",
