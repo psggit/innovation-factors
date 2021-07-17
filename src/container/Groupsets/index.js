@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Layout from "Components/Layout";
 import InputLabel from "Components/InputLabel";
 import Loader from "Components/Loader";
-import Select from "Components/Select";
+import AutoCompleteMultiSelect from "Components/Autocomplete/multiSelect";
 import Notification from "Components/Notification";
 import PageTitle from "Components/PageTitle";
 import { fetchGroupsets } from "./../../utils/http";
@@ -34,7 +34,7 @@ const Groupsets = ({ classes, history, title }) => {
   const [groupsetsDataObj, setGroupsetsDataObj] = useState({});
 
   const [groupsets, setGroupsets] = useState([]);
-  const [groupIdx, setGroupIdx] = useState("0");
+  const [selectedGroups, setSelectedGroups] = React.useState([]);
 
   const [errorObject, setErrorObject] = useState({
     open: false,
@@ -54,14 +54,16 @@ const Groupsets = ({ classes, history, title }) => {
 
     if (
       Object.keys(filteredGroupsets).length > 0 &&
-      groupIdx.toString() !== "0"
+      selectedGroups?.length > 0
     ) {
       const filteredObj = {};
       Object.keys(filteredGroupsets).filter((key) => {
         if (
-          key ===
-            groupsets[groupsets.findIndex((item) => item.id === groupIdx)]
-              .name ||
+          (selectedGroups.findIndex((item) => item.value === key) !== -1 &&
+            key ===
+              selectedGroups[
+                selectedGroups.findIndex((item) => item.value === key)
+              ].value) ||
           key === "stages" ||
           key === "groups"
         ) {
@@ -73,7 +75,7 @@ const Groupsets = ({ classes, history, title }) => {
     }
 
     return filteredGroupsets;
-  }, [groupIdx, groupsetsDataObj]);
+  }, [selectedGroups, groupsetsDataObj]);
 
   const fetchGroupSetsData = () => {
     setIsLoadingGroupsets(true);
@@ -85,7 +87,7 @@ const Groupsets = ({ classes, history, title }) => {
         let groupsetsData = response.data.groups.map((item) => {
           return {
             id: item.id,
-            name: item.name,
+            value: item.name,
             displayName: startCase(camelCase(item.name)),
           };
         });
@@ -102,9 +104,9 @@ const Groupsets = ({ classes, history, title }) => {
       });
   };
 
-  const handleGroupChange = (e) => {
-    setGroupIdx(e.target.value);
-  };
+  // const handleGroupChange = (e) => {
+  //   setGroupIdx(e.target.value);
+  // };
 
   const handleBoxClick = (groupsetId) => {
     history.push(`/innovation-capacity?groupIdx=${groupsetId}`);
@@ -196,12 +198,21 @@ const Groupsets = ({ classes, history, title }) => {
             <InputLabel classname={classes.inputLabelStyle}>
               Groupset
             </InputLabel>
-            <Select
+            {/* <Select
               options={groupsets}
               labelKey="name"
               placeholder="Groupsets"
               defaultValue={groupIdx}
               handleSelectChange={handleGroupChange}
+            /> */}
+            <AutoCompleteMultiSelect
+              id="autocomplete-value-controlled-box"
+              optionList={groupsets}
+              value={selectedGroups}
+              handleSearchChange={(e, v) => {
+                setSelectedGroups(v);
+              }}
+              style={{ width: 300, marginTop: 16, marginBottom: 8 }}
             />
           </div>
         </div>
@@ -224,7 +235,13 @@ const Groupsets = ({ classes, history, title }) => {
               <FormColumn />
             </Grid>
             {filteredGroupsetsData.groups.map((groupData, index) => {
-              if (groupIdx === "0" || groupData.id === groupIdx) {
+              if (
+                selectedGroups.length === 0 ||
+                (selectedGroups &&
+                  selectedGroups.findIndex(
+                    (group) => group.value === groupData.name
+                  ) !== -1)
+              ) {
                 return (
                   <Grid container item key={`group-row-${index}`}>
                     <FormRow dataItem={groupData} />
