@@ -179,7 +179,16 @@ const Groupsets = ({ classes, history, title }) => {
               key={`group-column-${index}`}
             >
               <Paper className={clsx(classes.paper, classes.fontStyle)}>
-                {item.stageName}
+                <div className={classes.columnStyle}>
+                  <div>
+                    <img
+                      src={`data:image/png;base64, ${item.icon}`}
+                      alt={`${item.stageName}_icon`}
+                      className={classes.iconStyle}
+                    />
+                  </div>
+                  <div> {item.stageName}</div>
+                </div>
               </Paper>
             </Grid>
           );
@@ -230,7 +239,7 @@ const Groupsets = ({ classes, history, title }) => {
             <div className={classes.emptyStyle}>No groupsets found</div>
           )}
         {!isLoadingGroupsets && Object.keys(filteredGroupsetsData).length > 0 && (
-          <Grid container>
+          <Grid container xs={12}>
             <Grid container item>
               <FormColumn />
             </Grid>

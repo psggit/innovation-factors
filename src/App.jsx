@@ -56,7 +56,7 @@ function App() {
               render={() => <Login history={history} />}
             />
           )}
-          <div>
+          <div style={{ width: "calc(100% - 64px)" }}>
             {isLoggedIn && (
               <React.Fragment>
                 <Route

@@ -146,3 +146,44 @@ export function fetchManagers(payload) {
       throw parseHttpError(err);
     });
 }
+
+export function fetchGroupsetList(payload) {
+  payload.userId = getUserId();
+  return fetch(`${getBaseUrl()}${Endpoints.getGroupsetList()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}
+
+export function fetchGroupsetEmployees(payload) {
+  payload.userId = getUserId();
+  return fetch(`${getBaseUrl()}${Endpoints.getGroupsetEmployees()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}
+
+export function forgotPassword(payload) {
+  return fetch(`${getBaseUrl()}${Endpoints.getForgotPassword()}`, {
+    method: "post",
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return processResponse(response);
+    })
+    .catch((err) => {
+      throw parseHttpError(err);
+    });
+}

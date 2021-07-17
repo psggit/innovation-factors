@@ -130,13 +130,24 @@ const InnovationFactor = ({ classes, title, history }) => {
   const processResponse = (data) => {
     const barChartData = {},
       barChartLabels = [],
-      barChartValues = [];
-    for (let i = 10; i <= data.dashboard.participation; i = i + 10) {
+      barChartValues = [],
+      backgroundColor = [];
+
+    for (let i = 1; i <= data.dashboard.participation; i = i + 10) {
+      barChartLabels.push(i - 1);
+      barChartValues.push((i + 1) * 10);
+      backgroundColor.push("#19A0F8");
+    }
+
+    for (let i = data.dashboard.participation + 10; i <= 100; i = i + 10) {
       barChartLabels.push(i);
       barChartValues.push(i * 10);
+      backgroundColor.push("rgba(201, 203, 207, 0.2)");
     }
     barChartData.labels = barChartLabels;
     barChartData.values = barChartValues;
+    barChartData.backgroundColor = backgroundColor;
+
     setBarChartData(barChartData);
 
     let lineChartData = {},
@@ -175,7 +186,7 @@ const InnovationFactor = ({ classes, title, history }) => {
   };
 
   const handleimprovementRes = (stageId) => {
-    console.log("id", stageId);
+    //console.log("id", stageId);
     history.push(`/improvement-resources?stageId=${stageId}`);
   };
 
@@ -184,7 +195,18 @@ const InnovationFactor = ({ classes, title, history }) => {
       <Card>
         <div className={classes.databox}>
           <div className={classes.part1}>
-            <div className={classes.textStyle}>{props.data.name}</div>
+            <div className={clsx(classes.textStyle, classes.imageWrapperStyle)}>
+              {props.data.icon && (
+                <span>
+                  <img
+                    className={classes.imageStyle}
+                    src={`data:image/png;base64, ${props.data.icon}`}
+                    alt=""
+                  />
+                </span>
+              )}
+              <span>{props.data.name}</span>
+            </div>
             <div className={classes.textStyle}>
               {props.data.score ? parseFloat(props.data.score).toFixed(1) : ""}
             </div>
@@ -240,6 +262,7 @@ const InnovationFactor = ({ classes, title, history }) => {
 
   const handleStageChange = (e) => {
     setStageIdx(e.target.value);
+    setFactorIdx("0");
   };
 
   const handleGroupChange = (e) => {
@@ -314,6 +337,7 @@ const InnovationFactor = ({ classes, title, history }) => {
                       <BarChart
                         labels={barChartData.labels}
                         values={barChartData.values}
+                        backgroundColor={barChartData.backgroundColor}
                       />
                       <span className={classes.note}>
                         {innovationCapacityData.dashboard.participation}%

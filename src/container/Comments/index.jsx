@@ -16,7 +16,7 @@ import { fetchComments } from "./../../utils/http";
 import { getRandomInt } from "./../../utils/helpers";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
-import { orderBy, sortBy } from "lodash";
+import { sortBy } from "lodash";
 
 const reactCloudOptions = {
   enableTooltip: false,

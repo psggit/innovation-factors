@@ -90,6 +90,7 @@ export const styles = (theme) => ({
   part1: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "baseline",
   },
   textStyle: {
     textTransform: "capitalize",
@@ -167,5 +168,14 @@ export const styles = (theme) => ({
     width: 300,
     marginRight: 30,
     marginBottom: 30,
+  },
+  imageStyle: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+  },
+  imageWrapperStyle: {
+    display: "flex",
+    alignItems: "center",
   },
 });

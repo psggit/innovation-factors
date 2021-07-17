@@ -1,5 +1,6 @@
 import React from "react";
-import { HorizontalBar } from "react-chartjs-2";
+//import { HorizontalBar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,7 @@ const BarChart = (props) => {
         fill: false,
         data: props.values,
         borderColor: "#19A0F8",
-        backgroundColor: "#19A0F8",
+        backgroundColor: props.backgroundColor,
         pointRadius: 0,
         lineTension: 0,
       },
@@ -61,7 +62,7 @@ const BarChart = (props) => {
   };
   return (
     <div className={classes.barStyle}>
-      <HorizontalBar data={data} options={options} height={0} />
+      <Bar data={data} options={options} height={0} />
     </div>
   );
 };

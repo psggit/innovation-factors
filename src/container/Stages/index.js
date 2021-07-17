@@ -46,7 +46,7 @@ const Stages = ({ classes, history, title }) => {
   };
 
   const handleimprovementRes = (stageId) => {
-    console.log("id", stageId);
+    //console.log("id", stageId);
     history.push(`/improvement-resources?stageId=${stageId}`);
   };
 

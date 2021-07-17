@@ -21,7 +21,7 @@ const LineChartGraph = (props) => {
         fill: false,
         data: props.values,
         borderColor: "#D9E6B5",
-        pointRadius: 10,
+        pointRadius: 7,
         borderDash: [10, 5],
         pointBorderColor: "#65B6D5",
       },
@@ -41,7 +41,7 @@ const LineChartGraph = (props) => {
     scales: {
       xAxes: [
         {
-          ticks: { display: false },
+          ticks: { display: true },
           gridLines: {
             display: true,
             drawBorder: true,
@@ -50,7 +50,7 @@ const LineChartGraph = (props) => {
       ],
       yAxes: [
         {
-          ticks: { display: false },
+          ticks: { display: true },
           gridLines: {
             display: true,
             drawBorder: true,

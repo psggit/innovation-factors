@@ -9,4 +9,7 @@ export default {
   updatePassword: () => "/user/userChangePassword.php",
   getEmployees: () => "/user/getEmployees.php",
   getManagers: () => "/user/getManagers.php",
+  getGroupsetList: () => "/user/getGroupsets.php",
+  getGroupsetEmployees: () => "/user/getGroupsetEmployees.php",
+  getForgotPassword: () => "/user/forgotPassword.php",
 };

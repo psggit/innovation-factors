@@ -4,13 +4,18 @@ import Notification from "./../../components/Notification";
 import ConfirmationDialogBox from "./../../components/DialogBox";
 import Button from "./../../components/Button";
 import InputBase from "./../../components/Inputbase";
-import { login } from "./../../utils/http";
+import { forgotPassword, login } from "./../../utils/http";
 import { validateEmail } from "./../../utils/helpers";
 
 const Login = ({ history }) => {
-  const [errorObject, setErrorObject] = useState({ open: false, message: "" });
+  const [errorObject, setErrorObject] = useState({
+    open: false,
+    message: "",
+    messageType: "",
+  });
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [email, setEmail] = useState("");
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const [mountForgotPasswordDialog, setMountForgotPasswordDialog] =
     useState(false);
@@ -32,7 +37,25 @@ const Login = ({ history }) => {
   };
 
   const handleForgotPasswordClick = () => {
-    console.log("email");
+    setIsForgotPassword(true);
+    forgotPassword({ userEmail: email })
+      .then((response) => {
+        setErrorObject({
+          open: true,
+          messageType: "success",
+          message: response.message,
+        });
+        setIsForgotPassword(false);
+        unmountForgotPassword();
+      })
+      .catch((error) => {
+        setErrorObject({
+          open: true,
+          message: error.errorMessage,
+          messageType: "error",
+        });
+        setIsForgotPassword(false);
+      });
   };
 
   const renderForgotPasswordDialog = () => {
@@ -55,7 +78,7 @@ const Login = ({ history }) => {
             useRealText={true}
             color="primary"
             text="Okay"
-            disabled={!validateEmail(email)}
+            disabled={!validateEmail(email) || isForgotPassword}
           />,
         ]}
         handleCloseDialog={unmountForgotPassword}
@@ -76,37 +99,24 @@ const Login = ({ history }) => {
     );
   };
   const handleLogin = (value) => {
-    // let userData = userInfo;
-    // userData.isLoggedIn = true;
-    // localStorage.setItem("userInfo", JSON.stringify(userData));
-    // history.push("/innovation-capacity");
     setIsLoggingIn(true);
     login({
       email: value.email,
       password: value.password,
     })
-      // fetch(
-      //   `https://innovationfactors.000webhostapp.com/api/user/userLogin.php`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify({ email: value.email, password: value.password }),
-      //   }
-      // )
       .then((response) => {
         let userData = response.data;
-        //console.log("resp", response);
         userData.isLoggedIn = true;
         localStorage.setItem("userInfo", JSON.stringify(userData));
         history.push("/innovation-capacity");
         setIsLoggingIn(false);
       })
       .catch((error) => {
-        console.log("Error in logging in", error.json());
         setIsLoggingIn(false);
-        // setErrorObject({
-        //   open: true,
-        //   message: error.errorMessage,
-        // });
+        setErrorObject({
+          open: true,
+          message: error.errorMessage,
+        });
         console.log("Error in logging in", error);
       });
   };
@@ -117,7 +127,7 @@ const Login = ({ history }) => {
           handleClose={resetError}
           open={errorObject.open}
           message={errorObject.message}
-          messageType="error"
+          messageType={errorObject.messageType}
         />
       )}
       <LoginForm

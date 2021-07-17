@@ -6,6 +6,7 @@ import Profile from "./Components/Profile";
 import Company from "./Components/Company";
 import Managers from "./Components/Managers";
 import Employees from "./Components/Employees";
+import Groupsets from "./Components/Groupsets";
 
 const Admin = ({ title, history }) => {
   const getUserPermission = () => {
@@ -37,6 +38,12 @@ const Admin = ({ title, history }) => {
       name: "Employees",
       icon: false,
       component: () => <Employees />,
+      hide: false,
+    },
+    {
+      name: "Groupsets",
+      icon: false,
+      component: () => <Groupsets history={history} activeTab={activeTab} />,
       hide: false,
     },
   ];

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export function getQueryParamByName(
   name,
   query = window.location.search.slice(1)
@@ -19,7 +20,7 @@ export function getRandomInt(max) {
 }
 
 export function validateEmail(email) {
-  const re =
+  const regex =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
+  return regex.test(email);
 }

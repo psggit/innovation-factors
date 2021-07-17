@@ -6,8 +6,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import PropTypes from "prop-types";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import useDialogState from "./useDialogState";
 import Typography from "@material-ui/core/Typography";
 
@@ -47,7 +45,7 @@ const DialogTitle = withStyles(styles)((props) => {
 
 const ConfirmationDialogBox = React.memo((props) => {
   const { title, children, actions, style, handleCloseDialog } = props;
-  const [dialogRendered, dialogOpen, closeDialog] = useDialogState({
+  const [dialogOpen, closeDialog] = useDialogState({
     defaultOpen: true,
   });
   const classes = useStyles();

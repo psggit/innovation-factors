@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import Loader from "Components/Loader";
 import Table from "Components/List/Table";
 import ListTableToolbar from "Components/List/ListTableToolbar";
-import { fetchEmployees } from "./../../../../utils/http";
+import { fetchGroupsetEmployees } from "./../../../../utils/http";
 import { getQueryParamByName } from "./../../../../utils/helpers";
 import Moment from "moment";
 import { styles } from "../../../../styles/container/admin.styles";
 import { withStyles } from "@material-ui/core/styles";
 
-const empTableColumns = [
+const groupsetEmpTableColumns = [
   { name: "First Name", value: (row) => row.firstName, width: 300 },
   { name: "Last Name", value: (row) => row.lastName, width: 300 },
   { name: "Email", value: (row) => row.email, width: 300 },
@@ -21,7 +21,7 @@ const empTableColumns = [
   },
 ];
 
-const Employees = ({ classes }) => {
+const GroupsetEmployees = ({ classes }) => {
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [employeeList, setEmployeeList] = useState([]);
 
@@ -31,45 +31,31 @@ const Employees = ({ classes }) => {
 
   const fetchEmployeeList = () => {
     const payload = {
-      userId: getQueryParamByName("userId")
-        ? getQueryParamByName("userId")
-        : JSON.parse(localStorage.getItem("userInfo")).userId,
-      userType:
-        getQueryParamByName("userId") ||
-        JSON.parse(localStorage.getItem("userInfo")).userType === "manager"
-          ? "manager"
-          : "admin",
+      userId: JSON.parse(localStorage.getItem("userInfo")).userId,
+      groupsetId: getQueryParamByName("groupId"),
     };
     setIsLoadingList(true);
     setEmployeeList([]);
-    fetchEmployees(payload)
+    fetchGroupsetEmployees(payload)
       .then((response) => {
         setIsLoadingList(false);
         setEmployeeList(response.data);
       })
       .catch((error) => {
         setIsLoadingList(false);
-        console.log("Error in fetching employess", error);
+        console.log("Error in fetching groupset employess", error);
       });
   };
 
   const toolbar = useCallback(() => {
-    return (
-      <ListTableToolbar
-        title={`${
-          getQueryParamByName("userId")
-            ? `Manager ${getQueryParamByName("name")} - Employee List`
-            : "Employee List"
-        }`}
-      />
-    );
+    return <ListTableToolbar title="Groupset Employee List" />;
   }, []);
 
   return (
     <div className={classes.adminWrapper}>
       {!isLoadingList && employeeList.length > 0 && (
         <Table
-          cols={empTableColumns}
+          cols={groupsetEmpTableColumns}
           toolbar={toolbar}
           data={employeeList}
           pageable={false}
@@ -88,4 +74,4 @@ const Employees = ({ classes }) => {
   );
 };
 
-export default withStyles(styles, { withTheme: true })(Employees);
+export default withStyles(styles, { withTheme: true })(GroupsetEmployees);

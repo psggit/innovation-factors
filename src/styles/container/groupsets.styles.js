@@ -36,4 +36,14 @@ export const styles = (theme) => ({
   inputLabelStyle: {
     marginBottom: 10,
   },
+  iconStyle: {
+    width: 30,
+    height: 30,
+    marginBottom: 8,
+  },
+  columnStyle: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+  },
 });
