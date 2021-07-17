@@ -16,7 +16,7 @@ import Notification from "Components/Notification";
 import BarChart from "./components/barchart";
 import DoughnutChart from "./components/doughnutChart";
 import HalfDoughnutChart from "./components/HalfDonutChart";
-// import LineChart from "./components/linechart";
+import LineChart from "./components/linechart";
 import Button from "./../../components/Button";
 import { fetchDashboard } from "./../../utils/http";
 import { getQueryParamByName } from "./../../utils/helpers";
@@ -40,7 +40,7 @@ const InnovationFactor = ({ classes, title, history }) => {
   const [selectedFactorId, setSelectedFactorId] = useState("");
 
   const [barChartData, setBarChartData] = useState({});
-  //const [lineChartData, setLineChartData] = useState({});
+  const [lineChartData, setLineChartData] = useState({});
   const [doughnutData, setDoughnutData] = useState([]);
   const [halfDoughnutData, setHalfDoughnutData] = useState([]);
 
@@ -139,23 +139,23 @@ const InnovationFactor = ({ classes, title, history }) => {
     barChartData.values = barChartValues;
     setBarChartData(barChartData);
 
-    // let lineChartData = {},
-    //   lineChartLabels = [],
-    //   lineChartValues = [];
-    // lineChartValues = data.dashboard.capacityHistory.map((item, index) => item);
-    // lineChartLabels = data.dashboard.capacityHistory.map(
-    //   (item, index) => index
-    // );
-    // lineChartData.labels = lineChartLabels;
-    // lineChartData.values = lineChartValues;
-    // setLineChartData(lineChartData);
+    let lineChartData = {},
+      lineChartLabels = [],
+      lineChartValues = [];
+    lineChartValues = data.dashboard.capacityHistory.map((item, index) => item);
+    lineChartLabels = data.dashboard.capacityHistory.map(
+      (item, index) => index
+    );
+    lineChartData.labels = lineChartLabels;
+    lineChartData.values = lineChartValues;
+    setLineChartData(lineChartData);
 
     const doughnutData = [
       data.dashboard.detractor,
       data.dashboard.promotor,
       data.dashboard.passive,
     ];
-    console.log("doughnutData1313", doughnutData);
+
     setDoughnutData(doughnutData);
 
     const halfDoughnutData = [
@@ -349,13 +349,13 @@ const InnovationFactor = ({ classes, title, history }) => {
                   </div>
                 </div>
               </div>
-              {/* <div className={classes.overviewWrapper}>
+              <div className={classes.overviewWrapper}>
                 <p className={classes.title}>Innovation Capacity Over Time</p>
                 <LineChart
                   labels={lineChartData.labels}
                   values={lineChartData.values}
                 />
-              </div> */}
+              </div>
             </div>
             {(Object.keys(innovationCapacityData.strengths).length > 0 ||
               Object.keys(innovationCapacityData.weakness).length > 0) && (

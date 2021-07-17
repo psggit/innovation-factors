@@ -46,7 +46,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router history={history}>
         <div style={{ display: "flex" }}>
-          {isLoggedIn && <Header currentRoute={currentRoute} />}
+          {isLoggedIn && (
+            <Header currentRoute={currentRoute} history={history} />
+          )}
           {!isLoggedIn && (
             <Route
               exact

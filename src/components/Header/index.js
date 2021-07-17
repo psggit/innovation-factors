@@ -7,7 +7,7 @@ import menuIcon from "Images/menu_icon.svg";
 import Drawer from "Components/Drawer";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-const Header = ({ classes, currentRoute }) => {
+const Header = ({ classes, currentRoute, history }) => {
   const links = require("./routes").links;
   const [drawerState, setDrawerState] = React.useState(false);
 
@@ -42,7 +42,12 @@ const Header = ({ classes, currentRoute }) => {
             <img alt="Menu" src={menuIcon} className={classes.menuIconStyle} />
           </IconButton>
 
-          <img src={IF_LOGO} alt="if_logo" className={classes.logoImg} />
+          <img
+            src={IF_LOGO}
+            alt="if_logo"
+            className={classes.logoImg}
+            onClick={() => history.push("/innovation-capacity")}
+          />
         </div>
         <div className={classes.titleWrapper}>
           <div>

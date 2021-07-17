@@ -23,6 +23,7 @@ export const styles = (theme) => ({
     width: 150,
     height: 50,
     marginLeft: 12,
+    cursor: "pointer",
   },
   menuIconStyle: {
     width: 24,

@@ -68,11 +68,11 @@ const HalfDoughnutChart = (props) => {
           position: "absolute",
           left: "55%",
           transform: "translate(-50%, 0)",
-          fontSize: "12px",
-          bottom: 30,
+          fontSize: "18px",
+          bottom: 50,
         }}
       >
-        {(props.data ? props.data[0] / 10 : "").toString()}
+        {parseFloat(props.data ? props.data[0] / 10 : "").toFixed(1)}
       </p>
       <Doughnut data={data} options={options} height={0} />
     </div>

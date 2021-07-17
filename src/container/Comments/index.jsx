@@ -145,6 +145,7 @@ const Comments = ({ classes, title }) => {
             {props.data.stageText}
           </div>
           <div className={classes.textStyle}>{props.data.score}</div>
+          <div className={classes.textStyle}>{props.data.commentdate}</div>
           <div
             style={{
               width: 300,
