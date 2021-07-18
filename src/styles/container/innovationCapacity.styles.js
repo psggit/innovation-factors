@@ -33,9 +33,10 @@ export const styles = (theme) => ({
     },
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     textTransform: "uppercase",
     marginBottom: 20,
+    fontWeight: 600,
     textAlign: "left",
     color: `${theme.palette.primary.main}`,
   },

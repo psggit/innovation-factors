@@ -50,7 +50,7 @@ const Groupsets = ({ classes, history }) => {
         setIsLoadingList(false);
         const modifiedResponse = response.data.map((groupset) => {
           groupset.managerList = groupset.manager.map(
-            (manager) => `${manager.firstName}${manager.lastName}`
+            (manager) => `${manager.firstName} ${manager.lastName}`
           );
           return groupset;
         });

@@ -50,7 +50,7 @@ const LineChartGraph = (props) => {
       ],
       yAxes: [
         {
-          ticks: { display: true },
+          ticks: { display: true, stepSize: 1 },
           gridLines: {
             display: true,
             drawBorder: true,

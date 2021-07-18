@@ -85,7 +85,18 @@ const Stages = ({ classes, history, title }) => {
       <Card style={{ marginBottom: 20 }}>
         <div className={classes.databox}>
           <div className={classes.part1}>
-            <div className={classes.textStyle}>{props.data.stageName}</div>
+            <div className={clsx(classes.textStyle, classes.imageWrapperStyle)}>
+              {props.data.icon && (
+                <span>
+                  <img
+                    className={classes.imageStyle}
+                    src={`data:image/png;base64, ${props.data.icon}`}
+                    alt=""
+                  />
+                </span>
+              )}
+              <span>{props.data.stageName}</span>
+            </div>
             <div className={classes.textStyle}>{props.data.score}</div>
             <Button
               text="Improvement Resources"

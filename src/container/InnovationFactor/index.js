@@ -347,6 +347,9 @@ const InnovationFactor = ({ classes, title, history }) => {
                 </div>
                 <div>
                   <p className={classes.title}>NPS</p>
+                  <p className={classes.value}>
+                    {innovationCapacityData.dashboard.nps?.toFixed(1)}%
+                  </p>
                   <div className={classes.section2}>
                     <div>
                       <DoughnutChart data={doughnutData} />

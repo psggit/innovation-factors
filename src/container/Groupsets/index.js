@@ -181,11 +181,13 @@ const Groupsets = ({ classes, history, title }) => {
               <Paper className={clsx(classes.paper, classes.fontStyle)}>
                 <div className={classes.columnStyle}>
                   <div>
-                    <img
-                      src={`data:image/png;base64, ${item.icon}`}
-                      alt={`${item.stageName}_icon`}
-                      className={classes.iconStyle}
-                    />
+                    {item.icon && (
+                      <img
+                        src={`data:image/png;base64, ${item.icon}`}
+                        alt={`${item.stageName}_icon`}
+                        className={classes.iconStyle}
+                      />
+                    )}
                   </div>
                   <div> {item.stageName}</div>
                 </div>
