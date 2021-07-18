@@ -43,8 +43,15 @@ export const styles = (theme) => ({
     fontFamily: `"Proxima_Nova_Bold", "Fallback", "sans-serif"`,
     marginRight: 10,
     textTransform: "uppercase",
+    display: "flex",
+    alignItems: "center",
   },
-
+  companyNameStyle: {
+    marginRight: 4,
+  },
+  helpIconStyle: {
+    color: theme.palette.primary.main,
+  },
   logout: {
     marginLeft: 10,
     cursor: "pointer",

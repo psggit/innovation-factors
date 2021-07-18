@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import menuIcon from "Images/menu_icon.svg";
 import Drawer from "Components/Drawer";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 
 const Header = ({ classes, currentRoute, history }) => {
   const links = require("./routes").links;
@@ -51,7 +52,18 @@ const Header = ({ classes, currentRoute, history }) => {
         </div>
         <div className={classes.titleWrapper}>
           <div>
-            <div className={classes.title}>{COMPANY_NAME}</div>
+            <div className={classes.title}>
+              <span className={classes.companyNameStyle}>{COMPANY_NAME}</span>
+
+              <a
+                href="https://innovationfactors.co.uk/"
+                target="_blank"
+                rel="noreferrer"
+                className={classes.helpIconStyle}
+              >
+                <HelpOutlineOutlinedIcon />
+              </a>
+            </div>
             <div>DASHBOARD</div>
           </div>
           <div className={classes.logout} onClick={handleLogout}>
