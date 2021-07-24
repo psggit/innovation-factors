@@ -5,7 +5,7 @@ import { styles } from "../../styles/container/login.styles";
 import { withStyles } from "@material-ui/core/styles";
 import FormField from "./FormField";
 import Button from "../../components/Button";
-import IF_LOGO from "./../../assets/IF_logo.jpg";
+import IF_LOGO from "./../../assets/IF-Logo-2020.png";
 
 //setting the initial values
 const initialValues = {

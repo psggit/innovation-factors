@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import IF_LOGO from "./../../assets/IF_logo.jpg";
+import IF_LOGO from "./../../assets/IF-Logo-2020.png";
 import { styles } from "./../../styles/components/header.styles";
 import IconButton from "@material-ui/core/IconButton";
 import menuIcon from "Images/menu_icon.svg";
@@ -53,8 +53,6 @@ const Header = ({ classes, currentRoute, history }) => {
         <div className={classes.titleWrapper}>
           <div>
             <div className={classes.title}>
-              <span className={classes.companyNameStyle}>{COMPANY_NAME}</span>
-
               <a
                 href="https://innovationfactors.co.uk/"
                 target="_blank"
@@ -63,6 +61,7 @@ const Header = ({ classes, currentRoute, history }) => {
               >
                 <HelpOutlineOutlinedIcon />
               </a>
+              <span className={classes.companyNameStyle}>{COMPANY_NAME}</span>
             </div>
             <div>DASHBOARD</div>
           </div>

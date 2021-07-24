@@ -24,6 +24,7 @@ export const styles = (theme) => ({
     height: 50,
     marginLeft: 12,
     cursor: "pointer",
+    objectFit: "contain",
   },
   menuIconStyle: {
     width: 24,
@@ -47,7 +48,7 @@ export const styles = (theme) => ({
     alignItems: "center",
   },
   companyNameStyle: {
-    marginRight: 4,
+    marginLeft: 4,
   },
   helpIconStyle: {
     color: theme.palette.primary.main,

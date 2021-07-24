@@ -13,14 +13,16 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { styles } from "./../../styles/container/innovationCapacity.styles";
 import { withStyles } from "@material-ui/core/styles";
 import { fetchComments } from "./../../utils/http";
-import { getRandomInt } from "./../../utils/helpers";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
 import { sortBy } from "lodash";
 
 const reactCloudOptions = {
-  enableTooltip: false,
+  colors: ["#1f77b4"],
+  enableTooltip: true,
   deterministic: false,
+  rotations: 0,
+  rotationAngles: [0, 0],
   //fontSizes: [15, 60],
   //scale: "sqrt",
 };
@@ -90,14 +92,14 @@ const Comments = ({ classes, title }) => {
             };
           })
         );
-        const wordCloudData = response.data.displayData.map((item) => {
-          return {
-            text: item.commentText,
-            value: getRandomInt(100),
-          };
-        });
+        // const wordCloudData = response.data.displayData.map((item) => {
+        //   return {
+        //     text: item.commentText,
+        //     value: getRandomInt(100),
+        //   };
+        // });
         setIsLoadingComments(false);
-        setWordCloudArray(wordCloudData);
+        setWordCloudArray(response.data.wordCloud);
 
         const groupsetsData = response.data.groupsets;
         groupsetsData.unshift({ id: "0", name: "All" });

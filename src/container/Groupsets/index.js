@@ -15,17 +15,17 @@ import { fetchGroupsets } from "./../../utils/http";
 
 const getColor = (value) => {
   let color = "";
-  if (value >= 0 && value < 1) color = "#E34040";
-  else if (value >= 1 && value < 2) color = "#DD564D";
-  else if (value >= 2 && value < 3) color = "#DD674D";
-  else if (value >= 3 && value < 4) color = "#DD704D";
-  else if (value >= 4 && value < 5) color = "#DD814D";
-  else if (value >= 5 && value < 6) color = "#6CAAE2";
-  else if (value >= 6 && value < 7) color = "#50A0E9";
-  else if (value >= 7 && value < 8) color = "#3A9FE8";
-  else if (value >= 8 && value < 9) color = "#3A7FE8";
-  else if (value >= 9 && value < 10) color = "#176FF3";
-  else color = "#023F9B";
+  if (value >= 0 && value < 1) color = "#FF0000";
+  else if (value >= 1 && value < 2) color = "#FF0000";
+  else if (value >= 2 && value < 3) color = "#F88608";
+  else if (value >= 3 && value < 4) color = "#FFC000";
+  else if (value >= 4 && value < 5) color = "#FFE285";
+  else if (value >= 5 && value < 6) color = "#FFFFFF";
+  else if (value >= 6 && value < 7) color = "#DDEBF7";
+  else if (value >= 7 && value < 8) color = "#BDD7EE";
+  else if (value >= 8 && value < 9) color = "#8EA9DB";
+  else if (value >= 9 && value < 10) color = "#2F75B5";
+  else color = "#2F75B5";
   return color;
 };
 
