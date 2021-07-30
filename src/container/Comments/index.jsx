@@ -15,6 +15,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { fetchComments } from "./../../utils/http";
 import ThumbsDownIcon from "./../../assets/ThumbsDownIcon.jpg";
 import ThumbsUpIcon from "./../../assets/ThumbsUpIcon.jpg";
+import neutralIcon from "./../../assets/neutralIcon.png";
 import { sortBy } from "lodash";
 
 const reactCloudOptions = {
@@ -23,7 +24,7 @@ const reactCloudOptions = {
   deterministic: false,
   rotations: 0,
   rotationAngles: [0, 0],
-  //fontSizes: [15, 60],
+  fontSizes: [15, 80],
   //scale: "sqrt",
 };
 
@@ -36,6 +37,9 @@ const Comments = ({ classes, title }) => {
 
   const [groups, setGroups] = useState([]);
   const [groupIdx, setGroupIdx] = useState("0");
+
+  const [rounds, setRounds] = useState([]);
+  const [roundIdx, setRoundsIdx] = useState("0");
 
   const [wordCloudArray, setWordCloudArray] = useState([]);
   const [errorObject, setErrorObject] = useState({
@@ -51,7 +55,7 @@ const Comments = ({ classes, title }) => {
 
   useEffect(() => {
     getCommentsData();
-  }, [stageIdx, groupIdx]);
+  }, [stageIdx, groupIdx, roundIdx]);
 
   const filteredCommentsData = useMemo(() => {
     let filteredComments = comments;
@@ -82,6 +86,7 @@ const Comments = ({ classes, title }) => {
     fetchComments({
       stageId: stageIdx === "0" ? "" : stageIdx,
       groupsetId: groupIdx === "0" ? "" : groupIdx,
+      round: roundIdx === "0" ? "" : roundIdx,
     })
       .then((response) => {
         setComments(
@@ -100,6 +105,11 @@ const Comments = ({ classes, title }) => {
         // });
         setIsLoadingComments(false);
         setWordCloudArray(response.data.wordCloud);
+
+        const roundsData = response.data.rounds;
+        roundsData.unshift({ id: "0", name: "All" });
+
+        setRounds(roundsData);
 
         const groupsetsData = response.data.groupsets;
         groupsetsData.unshift({ id: "0", name: "All" });
@@ -130,15 +140,23 @@ const Comments = ({ classes, title }) => {
     else if (sortDirection === "desc") setSortDirection("asc");
   };
 
+  const getScoreIcon = (score) => {
+    if (parseInt(score) < 4.5) {
+      return ThumbsDownIcon;
+    } else if (parseInt(score) >= 4.5 && parseInt(score) <= 5.5) {
+      return neutralIcon;
+    } else {
+      return ThumbsUpIcon;
+    }
+  };
+
   const DataBox = (props) => {
     return (
       <div className={classes.databox} style={{ marginBottom: 20 }}>
         <div className={classes.part1} style={{ alignItems: "center" }}>
           <div>
             <img
-              src={
-                parseInt(props.data.score) > 5 ? ThumbsUpIcon : ThumbsDownIcon
-              }
+              src={getScoreIcon(props.data.score)}
               alt=""
               style={{ width: 60, height: 60, marginRight: 10 }}
             />
@@ -173,6 +191,10 @@ const Comments = ({ classes, title }) => {
     setGroupIdx(e.target.value);
   };
 
+  const handleRoundChange = (e) => {
+    setRoundsIdx(e.target.value);
+  };
+
   return (
     <Layout>
       <PageTitle title={title} />
@@ -198,6 +220,16 @@ const Comments = ({ classes, title }) => {
               placeholder="Stages"
               defaultValue={stageIdx}
               handleSelectChange={handleStageChange}
+            />
+          </div>
+          <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
+            <InputLabel classname={classes.inputLabelStyle}>Rounds</InputLabel>
+            <Select
+              options={rounds}
+              labelKey="name"
+              placeholder="Rounds"
+              defaultValue={roundIdx}
+              handleSelectChange={handleRoundChange}
             />
           </div>
           <div className={classes.selectStyle} style={{ marginBottom: 0 }}>
