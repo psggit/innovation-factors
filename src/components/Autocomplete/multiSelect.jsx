@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { Autocomplete } from "@material-ui/lab";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import PropTypes from "prop-types";
 import HighlightedOptionItem from "./HighlightedOptionItem";
 import Chip from "@material-ui/core/Chip";
