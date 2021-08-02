@@ -29,7 +29,7 @@ const DrawerComponent = (props) => {
           onMouseOver={() => toggleMenu(true)}
           onMouseOut={() => toggleMenu(false)}
           variant="temporary"
-          open={true}
+          open={drawerState}
           classes={{
             root: classes.root,
             paper: classes.drawer,
