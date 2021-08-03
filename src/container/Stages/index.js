@@ -77,7 +77,11 @@ const Stages = ({ classes, history, title }) => {
   }, [groupsetIdx]);
 
   const handleFactorClick = (item) => {
-    setSelectedFactorId(item.factorId);
+    if (selectedFactorId === item.factorId) {
+      setSelectedFactorId("");
+    } else {
+      setSelectedFactorId(item.factorId);
+    }
   };
 
   const DataBox = (props) => {

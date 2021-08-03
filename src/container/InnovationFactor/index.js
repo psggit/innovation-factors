@@ -274,7 +274,11 @@ const InnovationFactor = ({ classes, title, history }) => {
   };
 
   const handleFactorClick = (item) => {
-    setSelectedFactorId(item.factorId);
+    if (selectedFactorId === item.factorId) {
+      setSelectedFactorId("");
+    } else {
+      setSelectedFactorId(item.factorId);
+    }
   };
 
   return (
