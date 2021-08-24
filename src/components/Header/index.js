@@ -16,6 +16,10 @@ const Header = ({ classes, currentRoute, history }) => {
     ? JSON.parse(localStorage.getItem("userInfo")).companyName
     : "";
 
+     const USER_NAME = localStorage.getItem("userInfo")
+    ? (JSON.parse(localStorage.getItem("userInfo")).firstName + ' ' + JSON.parse(localStorage.getItem("userInfo")).lastName)
+    : "";
+
   const handleRouteChange = (selectedRoute) => {
     if (currentRoute !== selectedRoute) window.location.assign(selectedRoute);
     setDrawerState(false);
@@ -54,7 +58,7 @@ const Header = ({ classes, currentRoute, history }) => {
           <div>
             <div className={classes.title}>
               <a
-                href="https://innovationfactors.co.uk/"
+                href="www.innovationfactors.co.uk/help"
                 target="_blank"
                 rel="noreferrer"
                 className={classes.helpIconStyle}
@@ -63,7 +67,7 @@ const Header = ({ classes, currentRoute, history }) => {
               </a>
               <span className={classes.companyNameStyle}>{COMPANY_NAME}</span>
             </div>
-            <div>DASHBOARD</div>
+            <div>{USER_NAME}</div>
           </div>
           <div className={classes.logout} onClick={handleLogout}>
             <ExitToAppIcon />
