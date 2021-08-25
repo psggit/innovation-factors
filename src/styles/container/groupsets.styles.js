@@ -20,7 +20,7 @@ export const styles = (theme) => ({
     textTransform: "capitalize",
   },
   subtitle: {
-    background: `${theme.palette.primary.main}`,
+    background: "#3d7ebc",
     padding: "10px",
     textTransform: "capitalize",
   },

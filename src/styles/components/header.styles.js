@@ -45,13 +45,27 @@ export const styles = (theme) => ({
     marginRight: 10,
     textTransform: "uppercase",
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    borderLeft: "1px solid #E4E4E4",
+    borderRight: "1px solid #E4E4E4",
+    padding: "3px 10px 3px 10px",
   },
   companyNameStyle: {
     marginLeft: 4,
+    marginBottom: 4,
+  },
+  userNameStyle: {
+    marginLeft: 4,
+    marginBottom: 4,
+  },
+  helpIconWrapper: {
+    borderLeft: "1px solid #E4E4E4",
+    padding: "10px 0 10px 0",
   },
   helpIconStyle: {
     color: theme.palette.primary.main,
+    padding: "0 10px 0 10px",
   },
   logout: {
     marginLeft: 10,

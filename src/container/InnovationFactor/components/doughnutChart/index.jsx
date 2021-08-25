@@ -4,8 +4,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   doughnutStyle: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     // [theme.breakpoints.down("sm")]: {
     //   width: 50,
     //   height: 50,
