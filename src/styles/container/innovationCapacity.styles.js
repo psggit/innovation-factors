@@ -115,8 +115,15 @@ export const styles = (theme) => ({
     padding: "20px 0px 0 0px",
     alignItems: "center",
   },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    marginRight: 4,
+  },
   factorStyle: {
     width: 200,
+    display: "flex",
+    alignItems: "center",
   },
   factorFixBtnStyle: {
     width: 205,

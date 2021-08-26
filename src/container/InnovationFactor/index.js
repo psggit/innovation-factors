@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { CSSTransition } from "react-transition-group";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
@@ -241,7 +242,14 @@ const InnovationFactor = ({ classes, title, history }) => {
                     >
                       <div className={classes.factorDataWrapper}>
                         <div className={classes.factorData}>
-                          <div className={classes.factorStyle}>{item.name}</div>
+                          <div className={classes.factorStyle}>
+                            <FiberManualRecordIcon
+                              fontSize="small"
+                              style={{ width: 10, height: 10, marginRight: 4 }}
+                            />
+
+                            {item.name}
+                          </div>
                           <div className={classes.factorStyle}>
                             {item.score
                               ? parseFloat(item.score).toFixed(1)

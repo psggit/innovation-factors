@@ -14,6 +14,7 @@ export const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
   title: {
     marginBottom: "10px",

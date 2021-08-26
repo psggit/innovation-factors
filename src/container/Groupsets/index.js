@@ -134,12 +134,13 @@ const Groupsets = ({ classes, history, title }) => {
             return (
               <Grid
                 item
-                xs={1}
+                xs={1.5}
                 className={classes.grid}
                 style={{
                   background: `${getColor(
                     filteredGroupsetsData[groupData][keyName]
                   )}`,
+                  flexGrow: 1,
                 }}
                 key={`group-row-column-${keyIndex}`}
               >
@@ -174,7 +175,7 @@ const Groupsets = ({ classes, history, title }) => {
           return (
             <Grid
               item
-              xs={1}
+              xs={1.5}
               className={classes.grid}
               key={`group-column-${index}`}
             >
