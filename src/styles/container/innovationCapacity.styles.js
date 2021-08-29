@@ -95,7 +95,7 @@ export const styles = (theme) => ({
   },
   textStyle: {
     textTransform: "capitalize",
-    width: 200,
+    width: 300,
   },
   subtitleWrapper: {
     display: "flex",
@@ -121,7 +121,7 @@ export const styles = (theme) => ({
     marginRight: 4,
   },
   factorStyle: {
-    width: 200,
+    width: 300,
     display: "flex",
     alignItems: "center",
   },

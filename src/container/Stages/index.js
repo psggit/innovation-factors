@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from "react";
 import Layout from "Components/Layout";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import InputLabel from "Components/InputLabel";
 import Notification from "Components/Notification";
 import Card from "@material-ui/core/Card";
@@ -109,14 +110,12 @@ const Stages = ({ classes, history, title }) => {
             />
           </div>
           <div className={classes.part2}>
-            <div className={clsx(classes.titleWrapper)}>
+            <div
+              className={clsx(classes.titleWrapper)}
+              onClick={() => handleShowFactorDetails(props.data)}
+            >
               <ArrowDropDownIcon />
-              <p
-                className={classes.textBorder}
-                onClick={() => handleShowFactorDetails(props.data)}
-              >
-                Innovation Factors
-              </p>
+              <p className={classes.textBorder}>Innovation Factors</p>
             </div>
             <Collapse
               in={showDetails === props.data.stageId}
@@ -129,13 +128,25 @@ const Stages = ({ classes, history, title }) => {
                     <div key={`factor${index}`}>
                       <div className={classes.factorDataWrapper}>
                         <div className={classes.factorData}>
-                          <div className={classes.factorStyle}>{item.name}</div>
-                          <div>{item.score}</div>
-                          <Button
-                            text="Factor Fix"
-                            color="primary"
-                            onClick={() => handleFactorClick(item)}
-                          />
+                          <div className={classes.factorStyle}>
+                            <FiberManualRecordIcon
+                              fontSize="small"
+                              style={{ width: 10, height: 10, marginRight: 4 }}
+                            />
+                            {item.name}
+                          </div>
+                          <div className={classes.factorStyle}>
+                            {item.score
+                              ? parseFloat(item.score).toFixed(1)
+                              : ""}
+                          </div>
+                          <div className={classes.factorFixBtnStyle}>
+                            <Button
+                              text="Factor Fix"
+                              color="primary"
+                              onClick={() => handleFactorClick(item)}
+                            />
+                          </div>
                         </div>
                         {selectedFactorId === item.factorId && (
                           <p className={classes.factorDataDesc}>

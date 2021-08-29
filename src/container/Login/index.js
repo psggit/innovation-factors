@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CookieConsent from "react-cookie-consent";
 import LoginForm from "./LoginForm";
 import Notification from "./../../components/Notification";
 import ConfirmationDialogBox from "./../../components/DialogBox";
@@ -6,8 +7,10 @@ import Button from "./../../components/Button";
 import InputBase from "./../../components/Inputbase";
 import { forgotPassword, login } from "./../../utils/http";
 import { validateEmail } from "./../../utils/helpers";
+import { styles } from "../../styles/container/login.styles";
+import { withStyles } from "@material-ui/core/styles";
 
-const Login = ({ history }) => {
+const Login = ({ classes, history }) => {
   const [errorObject, setErrorObject] = useState({
     open: false,
     message: "",
@@ -89,7 +92,7 @@ const Login = ({ history }) => {
             id="reason"
             classname="inputStyle"
             key="reason"
-            placeholder="Enter email id"
+            placeholder="Enter email"
             defaultValue={email}
             handleTextChange={handleEmailChange}
             style={{ width: "100%" }}
@@ -98,6 +101,31 @@ const Login = ({ history }) => {
       </ConfirmationDialogBox>
     );
   };
+
+  const renderAcceptCookieDialog = () => {
+    return (
+      <div>
+        <CookieConsent debug buttonText="Accept">
+          <p className={classes.consentTextStyle}>
+            By clicking "Accept All Cookies", you agree o the storing of cookies
+            on your device to enhance site navigation, analyze site usage, and
+            assist in our marketing efforts.
+          </p>
+        </CookieConsent>
+      </div>
+    );
+  };
+
+  const setCookie = () => {
+    var now = new Date();
+
+    var time = now.getTime();
+    var expireTime = time + 48 * 60 * 60 * 1000;
+
+    now.setTime(expireTime);
+    document.cookie = "cookie=cookie;expires=" + now.toUTCString() + ";path=/";
+  };
+
   const handleLogin = (value) => {
     setIsLoggingIn(true);
     login({
@@ -107,6 +135,7 @@ const Login = ({ history }) => {
       .then((response) => {
         let userData = response.data;
         userData.isLoggedIn = true;
+        setCookie();
         localStorage.setItem("userInfo", JSON.stringify(userData));
         history.push("/innovation-capacity");
         setIsLoggingIn(false);
@@ -136,8 +165,9 @@ const Login = ({ history }) => {
         handleForgotPassword={mountForgotPassword}
       />
       {mountForgotPasswordDialog && renderForgotPasswordDialog()}
+      {renderAcceptCookieDialog()}
     </React.Fragment>
   );
 };
 
-export default Login;
+export default withStyles(styles, { withTheme: true })(Login);
