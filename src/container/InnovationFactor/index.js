@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
+import { CSSTransition } from "react-transition-group";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
@@ -18,6 +20,8 @@ import DoughnutChart from "./components/doughnutChart";
 import HalfDoughnutChart from "./components/HalfDonutChart";
 import LineChart from "./components/linechart";
 import Button from "./../../components/Button";
+import StageIcon from "Images/stages.png";
+import GroupsetsIcon from "Images/groupsets.png";
 import { fetchDashboard } from "./../../utils/http";
 import { getQueryParamByName } from "./../../utils/helpers";
 
@@ -232,22 +236,46 @@ const InnovationFactor = ({ classes, title, history }) => {
               <CardContent>
                 {props.data.factors.map((item, index) => {
                   return (
-                    <div key={`factor${index}`}>
+                    <div
+                      key={`factor${index}`}
+                      className={classes.factorWrapper}
+                    >
                       <div className={classes.factorDataWrapper}>
                         <div className={classes.factorData}>
-                          <div className={classes.factorStyle}>{item.name}</div>
-                          <div>{item.score}</div>
-                          <Button
-                            text="Factor Fix"
-                            color="primary"
-                            onClick={() => handleFactorClick(item)}
-                          />
+                          <div className={classes.factorStyle}>
+                            <FiberManualRecordIcon
+                              fontSize="small"
+                              style={{ width: 10, height: 10, marginRight: 4 }}
+                            />
+
+                            {item.name}
+                          </div>
+                          <div className={classes.factorStyle}>
+                            {item.score
+                              ? parseFloat(item.score).toFixed(1)
+                              : ""}
+                          </div>
+                          <div className={classes.factorFixBtnStyle}>
+                            <Button
+                              text="Factor Fix"
+                              color="primary"
+                              onClick={() => handleFactorClick(item)}
+                            />
+                          </div>
                         </div>
-                        {selectedFactorId === item.factorId && (
+                        <CSSTransition
+                          in={selectedFactorId === item.factorId}
+                          timeout={350}
+                          classNames="display"
+                          unmountOnExit
+                          appear
+                          enter
+                          exit
+                        >
                           <p className={classes.factorDataDesc}>
                             {item.factorFixText}
                           </p>
-                        )}
+                        </CSSTransition>
                       </div>
                     </div>
                   );
@@ -408,10 +436,24 @@ const InnovationFactor = ({ classes, title, history }) => {
                   (keyName, index) => {
                     return (
                       <div
-                        style={{ marginBottom: 20 }}
+                        style={{
+                          marginBottom: 20,
+                        }}
                         key={`strengths${index}`}
                       >
-                        <p className={classes.subtitle}>{keyName}</p>
+                        <div className={classes.subtitleWrapper}>
+                          <img
+                            alt="Menu"
+                            src={
+                              keyName.toLowerCase() === "groupset"
+                                ? GroupsetsIcon
+                                : StageIcon
+                            }
+                            className={classes.imageStyle}
+                          />
+                          <span className={classes.subtitle}>{keyName}</span>
+                        </div>
+
                         <DataBox
                           data={innovationCapacityData.strengths[keyName]}
                         />
@@ -433,7 +475,18 @@ const InnovationFactor = ({ classes, title, history }) => {
                         style={{ marginBottom: 20 }}
                         key={`weakness${index}`}
                       >
-                        <p className={classes.subtitle}>{keyName}</p>
+                        <div className={classes.subtitleWrapper}>
+                          <img
+                            alt="Menu"
+                            src={
+                              keyName.toLowerCase() === "groupset"
+                                ? GroupsetsIcon
+                                : StageIcon
+                            }
+                            className={classes.imageStyle}
+                          />
+                          <span className={classes.subtitle}>{keyName}</span>
+                        </div>
                         <DataBox
                           data={innovationCapacityData.weakness[keyName]}
                         />

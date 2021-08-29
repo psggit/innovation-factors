@@ -14,13 +14,14 @@ export const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
   title: {
     marginBottom: "10px",
     textTransform: "capitalize",
   },
   subtitle: {
-    background: `${theme.palette.primary.main}`,
+    background: "#3d7ebc",
     padding: "10px",
     textTransform: "capitalize",
   },

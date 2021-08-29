@@ -97,6 +97,10 @@ export const styles = (theme) => ({
     textTransform: "capitalize",
     width: 200,
   },
+  subtitleWrapper: {
+    display: "flex",
+    alignItems: "center",
+  },
   subtitle: {
     padding: "10px 0",
     textTransform: "uppercase",
@@ -111,8 +115,20 @@ export const styles = (theme) => ({
     padding: "20px 0px 0 0px",
     alignItems: "center",
   },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    marginRight: 4,
+  },
   factorStyle: {
     width: 200,
+    display: "flex",
+    alignItems: "center",
+  },
+  factorFixBtnStyle: {
+    width: 205,
+    display: "flex",
+    justifyContent: "flex-end",
   },
   titleWrapper: {
     display: "flex",
@@ -178,5 +194,18 @@ export const styles = (theme) => ({
   imageWrapperStyle: {
     display: "flex",
     alignItems: "center",
+  },
+  factorWrapper: {
+    "& .display-appear-done": {
+      width: "100%",
+      background: "#efefef",
+      color: "#000",
+    },
+    "& .display-appear-active": {
+      width: "100%",
+      transition: "all 300ms",
+      background: "#ccbcbc",
+      color: "#000",
+    },
   },
 });

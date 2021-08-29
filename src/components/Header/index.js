@@ -16,8 +16,10 @@ const Header = ({ classes, currentRoute, history }) => {
     ? JSON.parse(localStorage.getItem("userInfo")).companyName
     : "";
 
-     const USER_NAME = localStorage.getItem("userInfo")
-    ? (JSON.parse(localStorage.getItem("userInfo")).firstName + ' ' + JSON.parse(localStorage.getItem("userInfo")).lastName)
+  const USER_NAME = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).firstName +
+      " " +
+      JSON.parse(localStorage.getItem("userInfo")).lastName
     : "";
 
   const handleRouteChange = (selectedRoute) => {
@@ -55,19 +57,19 @@ const Header = ({ classes, currentRoute, history }) => {
           />
         </div>
         <div className={classes.titleWrapper}>
-          <div>
-            <div className={classes.title}>
-              <a
-                href="www.innovationfactors.co.uk/help"
-                target="_blank"
-                rel="noreferrer"
-                className={classes.helpIconStyle}
-              >
-                <HelpOutlineOutlinedIcon />
-              </a>
-              <span className={classes.companyNameStyle}>{COMPANY_NAME}</span>
-            </div>
-            <div>{USER_NAME}</div>
+          <div className={classes.helpIconWrapper}>
+            <a
+              href="www.innovationfactors.co.uk/help"
+              target="_blank"
+              rel="noreferrer"
+              className={classes.helpIconStyle}
+            >
+              <HelpOutlineOutlinedIcon />
+            </a>
+          </div>
+          <div className={classes.title}>
+            <p className={classes.companyNameStyle}>{COMPANY_NAME}</p>
+            <p className={classes.userNameStyle}>{USER_NAME}</p>
           </div>
           <div className={classes.logout} onClick={handleLogout}>
             <ExitToAppIcon />
