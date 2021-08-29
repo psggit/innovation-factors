@@ -37,6 +37,10 @@ function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
   const emailProps = formik.getFieldProps("email");
   const passwordProps = formik.getFieldProps("password");
 
+  const handleKeyDown = (e) => {
+    if (formik.isValid && formik.dirty && e.which === 13) formik.handleSubmit();
+  };
+
   /**
    * getFieldProps is a way to reduce boilerplate (repetitive) code.
    * It returns helper methods like `onChange`, `onBlur`, `value`, `name`.
@@ -53,6 +57,7 @@ function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
             label="Email"
             type="email"
             classes={classes}
+            onKeyDown={handleKeyDown}
             className={classes.inputField}
             placeholder="Please Enter your email"
             {...emailProps}
@@ -68,6 +73,7 @@ function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
             type="password"
             className={classes.inputField}
             classes={classes}
+            onKeyDown={handleKeyDown}
             placeholder="Please Enter your password"
             {...passwordProps}
           />

@@ -13,6 +13,7 @@ import Stages from "Container/Stages";
 import Comments from "Container/Comments";
 import Admin from "Container/Admin";
 import { theme } from "./Theme";
+import { getCookie } from "./utils/helpers";
 
 const history = createHistory();
 
@@ -40,6 +41,11 @@ function App() {
       );
     });
     if (!isLoggedIn) history.push("/login");
+
+    if (isLoggedIn && !getCookie("cookie")) {
+      window.location.reload("/login");
+      localStorage.clear();
+    }
   }, [isLoggedIn]);
 
   return (

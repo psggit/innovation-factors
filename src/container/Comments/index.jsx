@@ -238,7 +238,7 @@ const Comments = ({ classes, title }) => {
               classname="input-base-class"
               style={{ width: "100%" }}
               defaultValue={searchText}
-              placeholder="Search by comment text"
+              placeholder="Search comment texts"
               handleTextChange={handleTextChange}
             />
           </div>

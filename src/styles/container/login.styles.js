@@ -65,4 +65,34 @@ export const styles = (theme) => ({
     cursor: "pointer",
     margin: "20px 0",
   },
+  // cookieConsent: {
+  //   maxWidth: 500,
+  //   borderRadius: 5,
+  //   padding: "20px 30px",
+  //   backgroundColor: "white",
+  //   position: "fixed",
+  //   top: "50%",
+  //   left: "50%",
+  //   right: "auto",
+  //   bottom: "auto",
+  //   transform: "translate3d(-50%, -50%, 9999990px)",
+  //   width: "95%",
+  //   boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
+  // },
+
+  // overlayclass: {
+  //   position: "fixed",
+  //   backgroundColor: "rgba(0,0,0,0.5)",
+  //   top: 0,
+  //   left: 0,
+  //   width: "100%",
+  //   height: "100%",
+  // },
+  consentTextStyle: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  // consentButtonStyle: {
+  //   padding: 10,
+  // },
 });
