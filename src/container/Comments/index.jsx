@@ -46,7 +46,7 @@ const Comments = ({ classes, title }) => {
     open: false,
     message: "",
   });
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortDirection, setSortDirection] = useState("desc");
   const [searchText, setSearchText] = useState("");
 
   const resetError = () => {

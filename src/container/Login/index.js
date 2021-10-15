@@ -107,9 +107,7 @@ const Login = ({ classes, history }) => {
       <div>
         <CookieConsent debug buttonText="Accept">
           <p className={classes.consentTextStyle}>
-            By clicking "Accept All Cookies", you agree o the storing of cookies
-            on your device to enhance site navigation, analyze site usage, and
-            assist in our marketing efforts.
+              We use cookies to help improve your experience of using Innovation Factors.
           </p>
         </CookieConsent>
       </div>
