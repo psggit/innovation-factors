@@ -264,7 +264,7 @@ const InnovationFactor = ({ classes, title, history }) => {
                           </div>
                         </div>
                         <CSSTransition
-                          in={selectedFactorId === item.factorId}
+                          in={selectedFactorId.includes(',' + item.factorId)}
                           timeout={350}
                           classNames="display"
                           unmountOnExit
@@ -302,10 +302,13 @@ const InnovationFactor = ({ classes, title, history }) => {
   };
 
   const handleFactorClick = (item) => {
-    if (selectedFactorId === item.factorId) {
-      setSelectedFactorId("");
+    if (selectedFactorId.includes(',' + item.factorId)) {
+      let facId = selectedFactorId
+      setSelectedFactorId(facId.replace( (',' + item.factorId), ''));
     } else {
-      setSelectedFactorId(item.factorId);
+      let facId = selectedFactorId
+
+      setSelectedFactorId(facId + ',' + item.factorId);
     }
   };
 
