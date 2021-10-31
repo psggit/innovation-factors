@@ -32,6 +32,7 @@ const DoughnutChart = (props) => {
     legend: {
       display: false,
     },
+    cutoutPercentage: 60,
     responsive: true,
     maintainAspectRatio: false,
     scales: {

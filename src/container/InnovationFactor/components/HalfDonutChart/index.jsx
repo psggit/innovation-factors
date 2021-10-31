@@ -4,7 +4,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   doughnutStyle: {
-    width: 150,
+    width: 200,
     height: 150,
     position: "relative",
     // [theme.breakpoints.down("sm")]: {
@@ -31,6 +31,7 @@ const HalfDoughnutChart = (props) => {
   const options = {
     rotation: 1 * Math.PI,
     circumference: 1 * Math.PI,
+    cutoutPercentage: 80,
     tooltips: {
       enabled: false,
     },
@@ -66,10 +67,10 @@ const HalfDoughnutChart = (props) => {
       <p
         style={{
           position: "absolute",
-          left: "55%",
+          left: "52%",
           transform: "translate(-50%, 0)",
           fontSize: "18px",
-          bottom: 50,
+          bottom: 40,
         }}
       >
         {parseFloat(props.data ? props.data[0] / 10 : "").toFixed(1)}
