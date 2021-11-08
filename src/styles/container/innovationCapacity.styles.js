@@ -40,10 +40,20 @@ export const styles = (theme) => ({
     textAlign: "left",
     color: `${theme.palette.primary.main}`,
   },
+  title1: {
+    fontSize: 14,
+    textTransform: "uppercase",
+    marginBottom: 50,
+    marginLeft: 30,
+    fontWeight: 600,
+    textAlign: "left",
+    color: `${theme.palette.primary.main}`,
+  },
   barWrapper: {
     display: "flex",
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
+    paddingBottom: 20,
   },
   note: {
     marginLeft: 20,

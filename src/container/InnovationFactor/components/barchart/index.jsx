@@ -5,8 +5,11 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   barStyle: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 100,
+
+    // marginTop: -60,
+    marginLeft: 30
     // [theme.breakpoints.down("sm")]: {
     //   width: 50,
     //   height: 50,

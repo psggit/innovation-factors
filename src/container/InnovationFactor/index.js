@@ -367,7 +367,7 @@ const InnovationFactor = ({ classes, title, history }) => {
                   </div>
 
                   <div>
-                    <p className={classes.title}>Participation</p>
+                    <p className={classes.title1}>Participation</p>
                     <div className={classes.barWrapper}>
                       <BarChart
                         labels={barChartData.labels}
