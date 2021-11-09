@@ -44,7 +44,6 @@ export const styles = (theme) => ({
     fontSize: 14,
     textTransform: "uppercase",
     marginBottom: 50,
-    marginLeft: 30,
     fontWeight: 600,
     textAlign: "left",
     color: `${theme.palette.primary.main}`,
@@ -53,7 +52,7 @@ export const styles = (theme) => ({
     display: "flex",
     // justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 20,
+    paddingBottom: 35,
   },
   note: {
     marginLeft: 20,
