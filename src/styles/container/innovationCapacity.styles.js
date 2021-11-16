@@ -43,7 +43,7 @@ export const styles = (theme) => ({
   title1: {
     fontSize: 14,
     textTransform: "uppercase",
-    marginBottom: 50,
+    marginBottom: 45,
     fontWeight: 600,
     textAlign: "left",
     color: `${theme.palette.primary.main}`,
