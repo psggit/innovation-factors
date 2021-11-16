@@ -41,9 +41,14 @@ const Stages = ({ classes, history, title }) => {
   }, [groupsetIdx]);
 
   const handleShowFactorDetails = (data) => {
-    if (!showDetails) setShowDetails(data.stageId);
-    else if (showDetails)
-      setShowDetails(showDetails === data.stageId ? "" : data.stageId);
+
+    if (showDetails.includes(',' + data.stageId)) {
+      let facId = showDetails
+      setShowDetails(facId.replace( (',' + data.stageId), ''));
+    } else {
+      let facId = showDetails
+      setShowDetails(facId + ',' + data.stageId);
+    }
   };
 
   const handleimprovementRes = (stageId) => {
@@ -77,11 +82,15 @@ const Stages = ({ classes, history, title }) => {
       });
   }, [groupsetIdx]);
 
+
   const handleFactorClick = (item) => {
-    if (selectedFactorId === item.factorId) {
-      setSelectedFactorId("");
+    if (selectedFactorId.includes(',' + item.factorId)) {
+      let facId = selectedFactorId
+      setSelectedFactorId(facId.replace( (',' + item.factorId), ''));
     } else {
-      setSelectedFactorId(item.factorId);
+      let facId = selectedFactorId
+
+      setSelectedFactorId(facId + ',' + item.factorId);
     }
   };
 
@@ -118,7 +127,7 @@ const Stages = ({ classes, history, title }) => {
               <p className={classes.textBorder}>Innovation Factors</p>
             </div>
             <Collapse
-              in={showDetails === props.data.stageId}
+              in={showDetails.includes(',' + props.data.stageId)}
               timeout="auto"
               unmountOnExit
             >
@@ -148,7 +157,7 @@ const Stages = ({ classes, history, title }) => {
                             />
                           </div>
                         </div>
-                        {selectedFactorId === item.factorId && (
+                        {selectedFactorId.includes(',' + item.factorId) && (
                           <p className={classes.factorDataDesc}>
                             {item.factorFixText}
                           </p>

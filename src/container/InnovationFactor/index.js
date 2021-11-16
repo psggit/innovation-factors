@@ -184,9 +184,13 @@ const InnovationFactor = ({ classes, title, history }) => {
 
   const handleShowFactorDetails = (data) => {
     //console.log("data", data, data.id);
-    if (!showDetails) setShowDetails(data.id);
-    else if (showDetails)
-      setShowDetails(showDetails === data.id ? "" : data.id);
+    if (showDetails.includes(',' + data.id)) {
+      let facId = showDetails
+      setShowDetails(facId.replace( (',' + data.id), ''));
+    } else {
+      let facId = showDetails
+      setShowDetails(facId + ',' + data.id);
+    }
   };
 
   const handleimprovementRes = (stageId) => {
@@ -229,7 +233,7 @@ const InnovationFactor = ({ classes, title, history }) => {
               <p className={classes.textBorder}>Innovation Factors</p>
             </div>
             <Collapse
-              in={showDetails === props.data.id}
+              in={showDetails.includes(',' + props.data.id)}
               timeout="auto"
               unmountOnExit
             >
