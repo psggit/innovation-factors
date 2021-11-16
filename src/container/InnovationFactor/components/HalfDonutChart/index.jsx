@@ -69,7 +69,7 @@ const HalfDoughnutChart = (props) => {
           position: "absolute",
           left: "52%",
           transform: "translate(-50%, 0)",
-          fontSize: "18px",
+          fontSize: "36px",
           bottom: 40,
         }}
       >
