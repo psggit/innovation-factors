@@ -379,7 +379,7 @@ const InnovationFactor = ({ classes, title, history }) => {
                         backgroundColor={barChartData.backgroundColor}
                       />
                       <span className={classes.note}>
-                        {innovationCapacityData.dashboard.participation}%
+                        {parseFloat(innovationCapacityData.dashboard.participation).toFixed(0)}%
                       </span>
                     </div>
                   </div>
@@ -387,7 +387,7 @@ const InnovationFactor = ({ classes, title, history }) => {
                 <div>
                   <p className={classes.title}>NPS</p>
                   <p className={classes.value}>
-                    {innovationCapacityData.dashboard.nps?.toFixed(1)}%
+                    {innovationCapacityData.dashboard.nps?.toFixed(0)}%
                   </p>
                   <div className={classes.section2}>
                     <div>
@@ -395,19 +395,19 @@ const InnovationFactor = ({ classes, title, history }) => {
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.promotor?.toFixed(1)}%
+                        {innovationCapacityData.dashboard.promotor?.toFixed(0)}%
                       </p>
                       <p className={classes.label}>Promoter</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.passive?.toFixed(1)}%
+                        {innovationCapacityData.dashboard.passive?.toFixed(0)}%
                       </p>
                       <p className={classes.label}>Passive</p>
                     </div>
                     <div className={classes.dataNote}>
                       <p className={classes.value}>
-                        {innovationCapacityData.dashboard.detractor?.toFixed(1)}
+                        {innovationCapacityData.dashboard.detractor?.toFixed(0)}
                         %
                       </p>
                       <p className={classes.label}>Detractor</p>

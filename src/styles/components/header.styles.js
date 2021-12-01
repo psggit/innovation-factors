@@ -58,6 +58,7 @@ export const styles = (theme) => ({
   userNameStyle: {
     marginLeft: 4,
     marginBottom: 4,
+    textTransform: 'capitalize',
   },
   helpIconWrapper: {
     borderLeft: "1px solid #E4E4E4",
