@@ -158,7 +158,7 @@ const Comments = ({ classes, title }) => {
             <img
               src={getScoreIcon(props.data.score)}
               alt=""
-              style={{ width: 60, height: 60, marginRight: 10 }}
+              style={{ width: 24, height: 24, marginRight: 10 }}
             />
           </div>
           <div className={classes.textStyle} style={{ width: 200 }}>
