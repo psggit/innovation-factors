@@ -59,7 +59,7 @@ function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
             classes={classes}
             onKeyDown={handleKeyDown}
             className={classes.inputField}
-            placeholder="Please Enter your email"
+            placeholder="Please enter your email"
             {...emailProps}
           />
           {formik.touched.email && formik.errors.email ? (
@@ -74,7 +74,7 @@ function LoginForm({ classes, onSubmit, isLoggingIn, handleForgotPassword }) {
             className={classes.inputField}
             classes={classes}
             onKeyDown={handleKeyDown}
-            placeholder="Please Enter your password"
+            placeholder="Please enter your password"
             {...passwordProps}
           />
           {formik.touched.password && formik.errors.password ? (

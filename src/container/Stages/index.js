@@ -111,7 +111,7 @@ const Stages = ({ classes, history, title }) => {
               )}
               <span>{props.data.stageName}</span>
             </div>
-            <div className={classes.textStyle}>{props.data.score}</div>
+            <div className={classes.textStyle}>{parseFloat(props.data.score).toFixed(1)}</div>
             <Button
               text="Improvement Resources"
               color="primary"
