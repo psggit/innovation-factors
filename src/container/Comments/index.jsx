@@ -169,11 +169,11 @@ const Comments = ({ classes, title }) => {
           <div
             style={{
               width: 300,
-              wordBreak: "break-word",
-              textOverflow: "ellipsis",
-              flex: 1,
-              overflow: "hidden",
-              flexWrap: "wrap",
+              // wordBreak: "break-word",
+              // textOverflow: "ellipsis",
+              // flex: 1,
+              // overflow: "hidden",
+              // flexWrap: "wrap",
             }}
           >
             {props.data.commentText}

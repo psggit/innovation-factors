@@ -56,10 +56,10 @@ const Header = ({ classes, currentRoute, history }) => {
             onClick={() => history.push("/innovation-capacity")}
           />
         </div>
-        <div className={classes.titleWrapper}>
+        <div className={classes.titleWrapper} title="help">
           <div className={classes.helpIconWrapper}>
             <a
-              href="www.innovationfactors.co.uk/help"
+              href="http://www.innovationfactors.co.uk/help"
               target="_blank"
               rel="noreferrer"
               className={classes.helpIconStyle}
@@ -71,7 +71,7 @@ const Header = ({ classes, currentRoute, history }) => {
             <p className={classes.companyNameStyle}>{COMPANY_NAME}</p>
             <p className={classes.userNameStyle}>{USER_NAME}</p>
           </div>
-          <div className={classes.logout} onClick={handleLogout}>
+          <div className={classes.logout} onClick={handleLogout} title="logout">
             <ExitToAppIcon />
           </div>
         </div>

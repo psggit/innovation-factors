@@ -7,6 +7,7 @@ import Moment from "moment";
 import { styles } from "../../../../styles/container/admin.styles";
 import { withStyles } from "@material-ui/core/styles";
 import Employees from "./../Employees";
+import { getQueryParamByName } from "./../../../../utils/helpers";
 
 const managersTableColumns = [
   { name: "Id", width: 100 },
@@ -25,6 +26,13 @@ const Managers = ({ classes, history }) => {
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [managerList, setManagerList] = useState([]);
   const [employeeDetails, setMountEmployeeDetails] = useState(false);
+
+  useEffect(() => {
+    history.listen((location) => {
+      setMountEmployeeDetails(getQueryParamByName("userId") ? true : false);
+    });
+    // eslint-disable-next-line
+  }, []);
 
   const mountEmployeeDetails = (row) => {
     history.push(
